@@ -63,10 +63,12 @@ const TripPlannerPage: FC = () => {
   useEffect(() => {
     if (tripDetails && tripDetailsRef.current) {
       const targetPosition =
-        tripDetailsRef.current.getBoundingClientRect().top + window.scrollY;
+        tripDetailsRef.current.getBoundingClientRect().top +
+        window.scrollY -
+        20;
       setTimeout(() => {
         window.scrollTo({ top: targetPosition, behavior: 'smooth' });
-      }, 1000);
+      }, 500);
     }
   }, [tripDetails]);
 
