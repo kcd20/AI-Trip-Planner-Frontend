@@ -38,7 +38,7 @@ const TripPlannerPage: FC = () => {
     setIsGeneratingTripDetails(true);
     const prompt = generatePrompt(getMainFormValues());
     try {
-      const { data } = await axios.post('http://localhost:3000/trip/generate', {
+      const { data } = await axios.post(import.meta.env.VITE_API_URL, {
         prompt,
       });
       setTripDetails(data);
