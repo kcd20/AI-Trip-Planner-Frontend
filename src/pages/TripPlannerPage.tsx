@@ -56,7 +56,6 @@ const TripPlannerPage: FC = () => {
 
   useEffect(() => {
     if (tripDetails && tripDetailsRef.current) {
-      window.console.log('trigger reset');
       resetTripDetails({ tripDetails });
     }
   }, [resetTripDetails, tripDetails]);
@@ -65,7 +64,9 @@ const TripPlannerPage: FC = () => {
     if (tripDetails && tripDetailsRef.current) {
       const targetPosition =
         tripDetailsRef.current.getBoundingClientRect().top + window.scrollY;
-      window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+      setTimeout(() => {
+        window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+      }, 1000);
     }
   }, [tripDetails]);
 
