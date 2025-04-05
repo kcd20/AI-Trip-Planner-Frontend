@@ -90,3 +90,5 @@ export const LOGIN_FORM_DEFAULT_VALUES = {
   email: '',
   password: '',
 };
+
+export const TIME_DISPLAY_FORMAT = 'hh:mm a';
