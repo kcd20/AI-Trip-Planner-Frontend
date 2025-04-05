@@ -42,7 +42,8 @@ const TripPlannerPage: FC = () => {
         `${import.meta.env.VITE_API_URL}/trip/generate`,
         {
           prompt,
-        }
+        },
+        { timeout: 30000 }
       );
       setTripDetails(data);
       setIsGeneratingTripDetails(false);
