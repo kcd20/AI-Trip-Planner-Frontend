@@ -1,71 +1,64 @@
+import { SignedIn, SignedOut, UserButton } from '@clerk/clerk-react';
 import AirplanemodeActiveIcon from '@mui/icons-material/AirplanemodeActive';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { onAuthStateChanged, signOut } from 'firebase/auth';
-import { FC, useEffect, useMemo, useState } from 'react';
-import { useNavigate } from 'react-router';
-
-import { auth } from '../config/firebase';
+import { FC } from 'react';
+import { useLocation, useNavigate } from 'react-router';
 
 const NavbarComponent: FC = () => {
   const navigate = useNavigate();
-  const onClickLogin = async (isUserLoggedIn: boolean | null) => {
-    if (isUserLoggedIn === null) {
-      return;
-    }
-    if (!isUserLoggedIn) {
-      navigate('/login');
-      return;
-    }
-    try {
-      await signOut(auth);
-      navigate('/');
-    } catch (error) {
-      window.console.log(error);
-    }
-  };
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState<boolean | null>(null);
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setIsUserLoggedIn(true);
-        return;
-      }
-      setIsUserLoggedIn(false);
-    });
-  }, []);
+  const { pathname } = useLocation();
 
-  const renderLoginText = useMemo(() => {
-    switch (isUserLoggedIn) {
-      case true:
-        return 'Logout';
-      case false:
-        return 'Login';
-      default:
-        return null;
-    }
-  }, [isUserLoggedIn]);
+  const isOnLoginOrRegisterPage =
+    pathname === '/login' || pathname === '/register';
+
+  const onClickLandingPage = () => {
+    navigate('/');
+  };
+  const onClickLogin = async () => {
+    navigate('/login');
+  };
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box>
       <AppBar position="static">
-        <Toolbar>
-          <AirplanemodeActiveIcon sx={{ padding: '1rem' }} />
-          <Typography component="div" sx={{ flexGrow: 1 }} variant="h6">
-            AI Trip Planner
-          </Typography>
-          <Button
-            color="inherit"
-            sx={{ textTransform: 'none' }}
-            onClick={() => onClickLogin(isUserLoggedIn)}
+        <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Box
+            sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
+            onClick={onClickLandingPage}
           >
-            <Typography component="div" variant="h6">
-              {renderLoginText}
+            <AirplanemodeActiveIcon sx={{ padding: '1rem' }} />
+
+            <Typography
+              component="div"
+              variant="h6"
+              onClick={onClickLandingPage}
+            >
+              AI Trip Planner
             </Typography>
-          </Button>
+          </Box>
+
+          {!isOnLoginOrRegisterPage && (
+            <>
+              <SignedOut>
+                <Button
+                  color="inherit"
+                  sx={{ textTransform: 'none' }}
+                  onClick={() => onClickLogin()}
+                >
+                  <Typography component="div" variant="h6">
+                    Login / Register
+                  </Typography>
+                </Button>
+              </SignedOut>
+              <SignedIn>
+                <UserButton />
+              </SignedIn>
+            </>
+          )}
         </Toolbar>
       </AppBar>
     </Box>

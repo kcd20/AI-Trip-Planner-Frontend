@@ -1,12 +1,23 @@
 import { TextField } from '@mui/material';
 import React from 'react';
-import { Controller, useFormContext } from 'react-hook-form';
+import {
+  Controller,
+  FieldValues,
+  RegisterOptions,
+  useFormContext,
+} from 'react-hook-form';
 
 interface TextFieldProps {
   label: string;
   fieldName: string;
   required?: boolean;
   type?: string;
+  rules?:
+    | Omit<
+        RegisterOptions<FieldValues, string>,
+        'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'
+      >
+    | undefined;
 }
 
 const TextFieldBase = ({
@@ -14,6 +25,7 @@ const TextFieldBase = ({
   fieldName,
   required = false,
   type = 'text',
+  rules,
 }: TextFieldProps): React.ReactNode => {
   const { control } = useFormContext();
   return (
@@ -25,12 +37,17 @@ const TextFieldBase = ({
           {...field}
           label={label}
           required={required}
-          sx={{ width: '100%' }}
+          sx={{
+            width: '100%',
+            '& input:-webkit-autofill': {
+              transition: 'background-color 600000s 0s, color 600000s 0s',
+            },
+          }}
           type={type}
           variant="outlined"
         />
       )}
-      rules={{ required }}
+      rules={rules}
     />
   );
 };

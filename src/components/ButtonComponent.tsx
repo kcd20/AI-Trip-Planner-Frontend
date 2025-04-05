@@ -5,8 +5,9 @@ import { FC } from 'react';
 interface ButtonComponentProps {
   text: string;
   variant: 'contained' | 'outlined';
-  onClick: () => void;
+  onClick?: () => void;
   disabled?: boolean;
+  type?: 'button' | 'submit' | 'reset' | undefined;
 }
 
 const ButtonComponent: FC<ButtonComponentProps> = ({
@@ -14,11 +15,13 @@ const ButtonComponent: FC<ButtonComponentProps> = ({
   variant,
   onClick,
   disabled = false,
+  type,
 }) => {
   return (
     <Button
       disabled={disabled}
       sx={{ textTransform: 'none', padding: '1rem' }}
+      type={type}
       variant={variant}
       onClick={onClick}
     >

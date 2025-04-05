@@ -13,13 +13,17 @@ import TimeOfDepartureField from '../fields/TimeOfDepartureField';
 const FormComponent: FC = () => {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <Box sx={{ display: 'grid', gap: '3.5rem' }}>
-        <DestinationsField />
-        <LengthOfTripField />
-        <ArrivalAirportField />
-        <DepartureAirportField />
-        <TimeOfArrivalField />
-        <TimeOfDepartureField />
+      <Box sx={{ display: 'grid', gap: '2rem' }}>
+        <Box sx={{ display: 'grid', gap: '2rem' }}>
+          <DestinationsField />
+          <LengthOfTripField />
+        </Box>
+        <Box sx={{ display: 'grid', gap: '3.5rem' }}>
+          <ArrivalAirportField />
+          <DepartureAirportField />
+          <TimeOfArrivalField />
+          <TimeOfDepartureField />
+        </Box>
       </Box>
     </LocalizationProvider>
   );

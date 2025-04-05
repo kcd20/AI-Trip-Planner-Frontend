@@ -3,7 +3,7 @@ const getSelectedPrefectureColor = (
   selectedPrefectures: string[]
 ): string => {
   if (selectedPrefectures.includes(prefecture)) {
-    return '#6f9c76';
+    return '#1976d2';
   }
   return '#d9d9d9';
 };

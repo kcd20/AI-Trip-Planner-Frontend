@@ -1,8 +1,8 @@
-import { SignIn } from '@clerk/clerk-react';
+import { SignUp } from '@clerk/clerk-react';
 import Box from '@mui/material/Box';
 import { FC } from 'react';
 
-const LoginPage: FC = () => {
+const RegisterPage: FC = () => {
   return (
     <Box
       sx={{
@@ -12,9 +12,9 @@ const LoginPage: FC = () => {
         transform: 'translate(-50%, -50%)',
       }}
     >
-      <SignIn signUpUrl="/register" />
+      <SignUp signInUrl="/login" />
     </Box>
   );
 };
 
-export default LoginPage;
+export default RegisterPage;
