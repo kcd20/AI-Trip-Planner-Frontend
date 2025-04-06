@@ -55,7 +55,7 @@ const TripPlannerPage: FC = () => {
         {
           prompt,
         },
-        { timeout: 30000 }
+        { timeout: 60000 }
       );
       setTripDetails(data);
       setIsGeneratingTripDetails(false);
