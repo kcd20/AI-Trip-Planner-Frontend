@@ -1,12 +1,31 @@
 import { SignedIn, SignedOut, UserButton } from '@clerk/clerk-react';
 import AirplanemodeActiveIcon from '@mui/icons-material/AirplanemodeActive';
+import MenuIcon from '@mui/icons-material/Menu';
+import { IconButton, Menu, MenuItem } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import { FC } from 'react';
+import { CSSProperties, FC, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router';
+
+import theme from '../config/theme';
+
+const classes = {
+  login: {
+    display: 'block',
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
+    },
+  } as CSSProperties,
+  loginMobile: {
+    display: 'none',
+    [theme.breakpoints.down('sm')]: {
+      display: 'block',
+    },
+  } as CSSProperties,
+} as const;
 
 const NavbarComponent: FC = () => {
   const navigate = useNavigate();
@@ -22,32 +41,37 @@ const NavbarComponent: FC = () => {
     navigate('/login');
   };
 
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
-    <Box>
-      <AppBar position="static">
-        <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Box
-            sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
-            onClick={onClickLandingPage}
-          >
-            <AirplanemodeActiveIcon sx={{ padding: '1rem' }} />
+    <AppBar position="static">
+      <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Box
+          sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
+          onClick={onClickLandingPage}
+        >
+          <AirplanemodeActiveIcon sx={{ padding: '1rem' }} />
 
-            <Typography
-              component="div"
-              variant="h6"
-              onClick={onClickLandingPage}
-            >
-              AI Trip Planner
-            </Typography>
-          </Box>
+          <Typography component="div" variant="h6" onClick={onClickLandingPage}>
+            AI Trip Planner
+          </Typography>
+        </Box>
 
-          {!isOnLoginOrRegisterPage && (
-            <>
+        {!isOnLoginOrRegisterPage && (
+          <>
+            <Box sx={classes.login}>
               <SignedOut>
                 <Button
                   color="inherit"
                   sx={{ textTransform: 'none' }}
-                  onClick={() => onClickLogin()}
+                  onClick={onClickLogin}
                 >
                   <Typography component="div" variant="h6">
                     Login / Register
@@ -57,11 +81,37 @@ const NavbarComponent: FC = () => {
               <SignedIn>
                 <UserButton />
               </SignedIn>
-            </>
-          )}
-        </Toolbar>
-      </AppBar>
-    </Box>
+            </Box>
+            <Box sx={classes.loginMobile}>
+              <IconButton
+                aria-label="menu"
+                color="inherit"
+                edge="start"
+                size="large"
+                onClick={handleClick}
+              >
+                <MenuIcon />
+              </IconButton>
+              <Menu
+                anchorEl={anchorEl}
+                id="basic-menu"
+                open={open}
+                onClose={handleClose}
+              >
+                <MenuItem
+                  onClick={() => {
+                    onClickLogin();
+                    handleClose();
+                  }}
+                >
+                  Login / Register
+                </MenuItem>
+              </Menu>
+            </Box>
+          </>
+        )}
+      </Toolbar>
+    </AppBar>
   );
 };
 

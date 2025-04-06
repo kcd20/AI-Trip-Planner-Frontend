@@ -46,6 +46,7 @@ const MultiAutoCompleteFieldBase = ({
           renderInput={(params) => (
             <TextField {...params} label={label} required={required} />
           )}
+          sx={{ width: '100%' }}
           onChange={(_event, value) => field.onChange(value)}
         />
       )}

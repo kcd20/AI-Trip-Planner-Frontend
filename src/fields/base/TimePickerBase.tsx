@@ -21,7 +21,12 @@ const TimePickerBase = ({
       control={control}
       name={fieldName}
       render={({ field }) => (
-        <TimePicker {...field} disabled={disabled} label={label} />
+        <TimePicker
+          {...field}
+          disabled={disabled}
+          label={label}
+          sx={{ width: '100%' }}
+        />
       )}
       rules={{ required }}
     />

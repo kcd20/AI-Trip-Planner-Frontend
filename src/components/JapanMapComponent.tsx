@@ -1,14 +1,26 @@
 import Box from '@mui/system/Box';
-import { FC } from 'react';
+import { CSSProperties, FC } from 'react';
 import { useWatch } from 'react-hook-form';
 
+import theme from '../config/theme';
 import getSelectedPrefectureColor from '../utils/getSelectedPrefectureColor';
+
+const classes = {
+  root: {
+    width: '65%',
+    display: 'flex',
+    justifyContent: 'center',
+    [theme.breakpoints.down('md')]: {
+      display: 'none',
+    },
+  } as CSSProperties,
+} as const;
 
 const JapanMapComponent: FC = () => {
   const currentSelectedPrefectures = useWatch({ name: 'destinations' });
 
   return (
-    <Box sx={{ width: '65%', display: 'flex', justifyContent: 'center' }}>
+    <Box sx={classes.root}>
       <svg
         baseProfile="tiny"
         fill="#d9d9d9"

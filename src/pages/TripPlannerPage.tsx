@@ -2,12 +2,13 @@ import { useUser } from '@clerk/clerk-react';
 import Box from '@mui/system/Box';
 import axios from 'axios';
 import { useSetAtom } from 'jotai';
-import { FC, useEffect, useRef, useState } from 'react';
+import { CSSProperties, FC, useEffect, useRef, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import ButtonComponent from '../components/ButtonComponent';
 import FormComponent from '../components/FormComponent';
 import JapanMapComponent from '../components/JapanMapComponent';
+import theme from '../config/theme';
 import { TRAVEL_FORM_DEFAULT_VALUES } from '../constants';
 import TripDetailsField from '../fields/TripDetailsField';
 import useLoader from '../hooks/useLoader';
@@ -19,6 +20,20 @@ import {
 } from '../store/atoms';
 import TravelFormInterface from '../types/TravelFormInterface';
 import generatePrompt from '../utils/generatePrompt';
+
+const classes = {
+  root: {
+    display: 'flex',
+    width: '100%',
+  } as CSSProperties,
+  form: {
+    width: '35%',
+    padding: '2rem',
+    [theme.breakpoints.down('md')]: {
+      width: '100%',
+    },
+  } as CSSProperties,
+} as const;
 
 const TripPlannerPage: FC = () => {
   const { isSignedIn } = useUser();
@@ -105,9 +120,9 @@ const TripPlannerPage: FC = () => {
 
   return (
     <Box>
-      <FormProvider {...mainFormMethods}>
-        <Box sx={{ display: 'flex' }}>
-          <Box sx={{ width: '35%', padding: '2rem' }}>
+      <Box sx={classes.root}>
+        <FormProvider {...mainFormMethods}>
+          <Box sx={classes.form}>
             <form
               noValidate
               onSubmit={handleSubmit(
@@ -133,8 +148,8 @@ const TripPlannerPage: FC = () => {
             </form>
           </Box>
           <JapanMapComponent />
-        </Box>
-      </FormProvider>
+        </FormProvider>
+      </Box>
       <FormProvider {...tripDetailsFormMethods}>
         {tripDetails && (
           <Box sx={{ display: 'grid', padding: '2rem', gap: '2rem' }}>
