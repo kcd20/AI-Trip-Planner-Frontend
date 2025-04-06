@@ -60,7 +60,7 @@ const NavbarComponent: FC = () => {
           <AirplanemodeActiveIcon sx={{ padding: '1rem' }} />
 
           <Typography component="div" variant="h6" onClick={onClickLandingPage}>
-            AI Trip Planner
+            AI Japan Trip Planner
           </Typography>
         </Box>
 
