@@ -58,12 +58,12 @@ const TripPlannerPage: FC = () => {
         { timeout: 60000 }
       );
       setTripDetails(data);
-      setIsGeneratingTripDetails(false);
     } catch (error) {
-      setIsGeneratingTripDetails(false);
+      setDisableAction(false);
       openSnackbar();
       window.console.log(error);
     } finally {
+      setIsGeneratingTripDetails(false);
       closeLoader();
     }
   };
