@@ -159,8 +159,8 @@ const TripPlannerPage: FC = () => {
             {isSignedIn && (
               <Box sx={{ display: 'flex', justifyContent: 'end' }}>
                 <ButtonComponent
-                  disabled={isGeneratingTripDetails}
-                  text="Save Trip Details"
+                  disabled
+                  text="Save Trip Details (WIP)"
                   type="submit"
                   variant="contained"
                 />

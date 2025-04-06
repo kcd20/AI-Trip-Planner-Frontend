@@ -5,6 +5,7 @@ import Box from '@mui/system/Box';
 import { useAtom, useAtomValue } from 'jotai';
 import { CSSProperties, FC } from 'react';
 
+import theme from '../config/theme';
 import { modalPropsAtom, openModalAtom } from '../store/atoms';
 
 import ButtonComponent from './ButtonComponent';
@@ -15,10 +16,22 @@ const classes = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 500,
+    width: '40vw',
     bgcolor: 'white',
     borderRadius: '1rem',
     padding: '2rem',
+    [theme.breakpoints.down('md')]: {
+      width: '70vw',
+    },
+  } as CSSProperties,
+  buttons: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    marginTop: '2rem',
+    [theme.breakpoints.down('sm')]: {
+      flexDirection: 'column-reverse',
+      gap: '1rem',
+    },
   } as CSSProperties,
 } as const;
 
@@ -45,13 +58,7 @@ const ModalComponent: FC = () => {
             {textTwo}
           </Typography>
         </Box>
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            marginTop: '2rem',
-          }}
-        >
+        <Box sx={classes.buttons}>
           <ButtonComponent
             text="Cancel"
             variant="outlined"
