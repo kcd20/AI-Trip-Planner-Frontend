@@ -10,6 +10,7 @@ interface MultiSelectFieldProps {
   fieldName: string;
   options: OptionsGroupType;
   required?: boolean;
+  disabled?: boolean;
 }
 
 const GroupSelectFieldBase = ({
@@ -17,6 +18,7 @@ const GroupSelectFieldBase = ({
   fieldName,
   options,
   required = false,
+  disabled = false,
 }: MultiSelectFieldProps): React.ReactNode => {
   const { control } = useFormContext();
   const clearOption = <option key="none" aria-label="None" value="" />;
@@ -37,8 +39,16 @@ const GroupSelectFieldBase = ({
       name={fieldName}
       render={({ field }) => (
         <FormControl sx={{ width: '100%' }}>
-          <InputLabel id={label}>{label}</InputLabel>
-          <Select native label={label} {...field} required={required}>
+          <InputLabel disabled={disabled} id={label}>
+            {label}
+          </InputLabel>
+          <Select
+            native
+            label={label}
+            {...field}
+            disabled={disabled}
+            required={required}
+          >
             {[clearOption, ...allOptions]}
           </Select>
         </FormControl>

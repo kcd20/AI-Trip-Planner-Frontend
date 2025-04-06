@@ -39,6 +39,7 @@
     "axios": "^1.7.7",
     "dayjs": "^1.11.13",
     "eslint-plugin-react": "^7.31.10",
+    "jotai": "^2.12.2",
     "lodash": "^4.17.21",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

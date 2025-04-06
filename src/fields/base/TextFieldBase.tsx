@@ -18,6 +18,7 @@ interface TextFieldProps {
         'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'
       >
     | undefined;
+  disabled?: boolean;
 }
 
 const TextFieldBase = ({
@@ -26,6 +27,7 @@ const TextFieldBase = ({
   required = false,
   type = 'text',
   rules,
+  disabled,
 }: TextFieldProps): React.ReactNode => {
   const { control } = useFormContext();
   return (
@@ -35,6 +37,7 @@ const TextFieldBase = ({
       render={({ field }) => (
         <TextField
           {...field}
+          disabled={disabled}
           label={label}
           required={required}
           sx={{

@@ -1,6 +1,7 @@
 import { useUser } from '@clerk/clerk-react';
 import Box from '@mui/system/Box';
 import axios from 'axios';
+import { useSetAtom } from 'jotai';
 import { FC, useEffect, useRef, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
@@ -10,6 +11,12 @@ import JapanMapComponent from '../components/JapanMapComponent';
 import { TRAVEL_FORM_DEFAULT_VALUES } from '../constants';
 import TripDetailsField from '../fields/TripDetailsField';
 import useLoader from '../hooks/useLoader';
+import useSnackbar from '../hooks/useSnackbar';
+import {
+  disableActionsAtom,
+  modalPropsAtom,
+  openModalAtom,
+} from '../store/atoms';
 import TravelFormInterface from '../types/TravelFormInterface';
 import generatePrompt from '../utils/generatePrompt';
 
@@ -26,16 +33,21 @@ const TripPlannerPage: FC = () => {
     mode: 'all',
     shouldUnregister: true,
   });
-  const { getValues: getTripDetailsValues, reset: resetTripDetails } =
-    tripDetailsFormMethods;
+  const { reset: resetTripDetails } = tripDetailsFormMethods;
   const [isGeneratingTripDetails, setIsGeneratingTripDetails] = useState(false);
   const tripDetailsRef = useRef<HTMLDivElement>(null);
   const { openLoader, closeLoader } = useLoader();
+  const { openSnackbar } = useSnackbar();
+  const setOpenModal = useSetAtom(openModalAtom);
+  const setModalProps = useSetAtom(modalPropsAtom);
+
   const [tripDetails, setTripDetails] = useState('');
+  const setDisableAction = useSetAtom(disableActionsAtom);
 
   const onClickGenerateTrip = async () => {
     openLoader();
     setIsGeneratingTripDetails(true);
+    setDisableAction(true);
     const prompt = generatePrompt(getMainFormValues());
     try {
       const { data } = await axios.post(
@@ -49,11 +61,29 @@ const TripPlannerPage: FC = () => {
       setIsGeneratingTripDetails(false);
     } catch (error) {
       setIsGeneratingTripDetails(false);
+      openSnackbar();
       window.console.log(error);
     } finally {
       closeLoader();
     }
   };
+
+  const onClickEdit = () => {
+    setOpenModal(true);
+  };
+
+  useEffect(() => {
+    setModalProps({
+      textOne: 'Editing your trip details will remove the generated itinerary.',
+      textTwo: 'Proceed to edit?',
+      proceedAction: () => {
+        setTripDetails('');
+        setDisableAction(false);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setOpenModal(false);
+      },
+    });
+  }, [setDisableAction, setModalProps, setOpenModal]);
 
   useEffect(() => {
     if (tripDetails && tripDetailsRef.current) {
@@ -78,7 +108,12 @@ const TripPlannerPage: FC = () => {
       <FormProvider {...mainFormMethods}>
         <Box sx={{ display: 'flex' }}>
           <Box sx={{ width: '35%', padding: '2rem' }}>
-            <form noValidate onSubmit={handleSubmit(onClickGenerateTrip)}>
+            <form
+              noValidate
+              onSubmit={handleSubmit(
+                tripDetails !== '' ? onClickEdit : onClickGenerateTrip
+              )}
+            >
               <FormComponent />
 
               <Box
@@ -90,7 +125,7 @@ const TripPlannerPage: FC = () => {
               >
                 <ButtonComponent
                   disabled={isGeneratingTripDetails}
-                  text="Generate Trip"
+                  text={tripDetails !== '' ? 'Edit Details' : 'Generate Trip'}
                   type="submit"
                   variant="contained"
                 />

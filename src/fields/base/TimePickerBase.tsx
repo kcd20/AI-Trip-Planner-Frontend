@@ -6,19 +6,23 @@ interface TextFieldProps {
   label: string;
   fieldName: string;
   required?: boolean;
+  disabled?: boolean;
 }
 
 const TimePickerBase = ({
   label,
   fieldName,
   required = false,
+  disabled = false,
 }: TextFieldProps): React.ReactNode => {
   const { control } = useFormContext();
   return (
     <Controller
       control={control}
       name={fieldName}
-      render={({ field }) => <TimePicker {...field} label={label} />}
+      render={({ field }) => (
+        <TimePicker {...field} disabled={disabled} label={label} />
+      )}
       rules={{ required }}
     />
   );

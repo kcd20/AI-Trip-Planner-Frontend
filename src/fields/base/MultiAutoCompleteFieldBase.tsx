@@ -18,14 +18,16 @@ interface MultiSelectFieldProps {
         'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'
       >
     | undefined;
+  disabled?: boolean;
 }
 
 const MultiAutoCompleteFieldBase = ({
   label,
   fieldName,
   options,
-  required = true,
+  required = false,
   rules,
+  disabled = false,
 }: MultiSelectFieldProps): React.ReactNode => {
   const { control } = useFormContext();
 
@@ -38,6 +40,7 @@ const MultiAutoCompleteFieldBase = ({
           {...field}
           filterSelectedOptions
           multiple
+          disabled={disabled}
           getOptionLabel={(option) => option}
           options={options}
           renderInput={(params) => (
