@@ -184,7 +184,7 @@ const TripPlannerPage: FC = () => {
               <Box sx={{ display: 'flex', justifyContent: 'end' }}>
                 <ButtonComponent
                   disabled
-                  text="Log in to save trip details (WIP)"
+                  text="Log In to Save Trip Details (WIP)"
                   type="submit"
                   variant="contained"
                   onClick={() => navigate('/login')}
