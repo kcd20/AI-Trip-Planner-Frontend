@@ -1,6 +1,7 @@
 import { useUser } from '@clerk/clerk-react';
 import Box from '@mui/system/Box';
 import axios from 'axios';
+import dayjs from 'dayjs';
 import { useSetAtom } from 'jotai';
 import { CSSProperties, FC, useEffect, useRef, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -9,7 +10,7 @@ import ButtonComponent from '../components/ButtonComponent';
 import FormComponent from '../components/FormComponent';
 import JapanMapComponent from '../components/JapanMapComponent';
 import theme from '../config/theme';
-import { TRAVEL_FORM_DEFAULT_VALUES } from '../constants';
+import { TIME_DISPLAY_FORMAT, TRAVEL_FORM_DEFAULT_VALUES } from '../constants';
 import TripDetailsField from '../fields/TripDetailsField';
 import useLoader from '../hooks/useLoader';
 import useSnackbar from '../hooks/useSnackbar';
@@ -19,7 +20,6 @@ import {
   openModalAtom,
 } from '../store/atoms';
 import TravelFormInterface from '../types/TravelFormInterface';
-import generatePrompt from '../utils/generatePrompt';
 
 const classes = {
   root: {
@@ -63,12 +63,24 @@ const TripPlannerPage: FC = () => {
     openLoader();
     setIsGeneratingTripDetails(true);
     setDisableAction(true);
-    const prompt = generatePrompt(getMainFormValues());
+    const {
+      destinations,
+      lengthOfTrip,
+      arrivalAirport,
+      departureAirport,
+      timeOfArrival,
+      timeOfDeparture,
+    } = getMainFormValues();
     try {
       const { data } = await axios.post(
         `${import.meta.env.VITE_API_URL}/trip/generate`,
         {
-          prompt,
+          destinations,
+          lengthOfTrip,
+          arrivalAirport,
+          departureAirport,
+          timeOfArrival: dayjs(timeOfArrival).format(TIME_DISPLAY_FORMAT),
+          timeOfDeparture: dayjs(timeOfDeparture).format(TIME_DISPLAY_FORMAT),
         },
         { timeout: 60000 }
       );
