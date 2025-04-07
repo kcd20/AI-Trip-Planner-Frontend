@@ -5,6 +5,7 @@ import dayjs from 'dayjs';
 import { useSetAtom } from 'jotai';
 import { CSSProperties, FC, useEffect, useRef, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router';
 
 import ButtonComponent from '../components/ButtonComponent';
 import FormComponent from '../components/FormComponent';
@@ -36,6 +37,7 @@ const classes = {
 } as const;
 
 const TripPlannerPage: FC = () => {
+  const navigate = useNavigate();
   const { isSignedIn } = useUser();
   const mainFormMethods = useForm<TravelFormInterface>({
     mode: 'all',
@@ -175,6 +177,17 @@ const TripPlannerPage: FC = () => {
                   text="Save Trip Details (WIP)"
                   type="submit"
                   variant="contained"
+                />
+              </Box>
+            )}
+            {!isSignedIn && (
+              <Box sx={{ display: 'flex', justifyContent: 'end' }}>
+                <ButtonComponent
+                  disabled
+                  text="Log in to save trip details (WIP)"
+                  type="submit"
+                  variant="contained"
+                  onClick={() => navigate('/login')}
                 />
               </Box>
             )}
