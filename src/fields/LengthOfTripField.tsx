@@ -45,7 +45,7 @@ const LengthOfTripField: FC = () => {
       <Typography sx={classes.error}>
         {errors.lengthOfTrip &&
           (errors.lengthOfTrip.message ||
-            'Please enter the length of your trip')}
+            'Please enter the length of your trip.')}
       </Typography>
     </Box>
   );
