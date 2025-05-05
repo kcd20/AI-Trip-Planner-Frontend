@@ -5,8 +5,8 @@ import Box from '@mui/system/Box';
 import { useAtom, useAtomValue } from 'jotai';
 import { CSSProperties, FC } from 'react';
 
-import theme from '../config/theme';
-import { modalPropsAtom, openModalAtom } from '../store/atoms';
+import theme from '../../config/theme';
+import { modalPropsAtom, openModalAtom } from '../../store/atoms';
 
 import ButtonComponent from './ButtonComponent';
 

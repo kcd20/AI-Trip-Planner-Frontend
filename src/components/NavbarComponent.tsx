@@ -64,52 +64,65 @@ const NavbarComponent: FC = () => {
           </Typography>
         </Box>
 
-        {!isOnLoginOrRegisterPage && (
-          <>
-            <Box sx={classes.login}>
-              <SignedOut>
-                <Button
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
+          <SignedIn>
+            <Button color="inherit" sx={{ textTransform: 'none' }}>
+              <Typography
+                component="div"
+                variant="h6"
+                onClick={() => navigate('/trips')}
+              >
+                Saved Trips
+              </Typography>
+            </Button>
+          </SignedIn>
+          {!isOnLoginOrRegisterPage && (
+            <>
+              <Box sx={classes.login}>
+                <SignedOut>
+                  <Button
+                    color="inherit"
+                    sx={{ textTransform: 'none' }}
+                    onClick={onClickLogin}
+                  >
+                    <Typography component="div" variant="h6">
+                      Login / Register
+                    </Typography>
+                  </Button>
+                </SignedOut>
+                <SignedIn>
+                  <UserButton />
+                </SignedIn>
+              </Box>
+              <Box sx={classes.loginMobile}>
+                <IconButton
+                  aria-label="menu"
                   color="inherit"
-                  sx={{ textTransform: 'none' }}
-                  onClick={onClickLogin}
+                  edge="start"
+                  size="large"
+                  onClick={handleClick}
                 >
-                  <Typography component="div" variant="h6">
+                  <MenuIcon />
+                </IconButton>
+                <Menu
+                  anchorEl={anchorEl}
+                  id="basic-menu"
+                  open={open}
+                  onClose={handleClose}
+                >
+                  <MenuItem
+                    onClick={() => {
+                      onClickLogin();
+                      handleClose();
+                    }}
+                  >
                     Login / Register
-                  </Typography>
-                </Button>
-              </SignedOut>
-              <SignedIn>
-                <UserButton />
-              </SignedIn>
-            </Box>
-            <Box sx={classes.loginMobile}>
-              <IconButton
-                aria-label="menu"
-                color="inherit"
-                edge="start"
-                size="large"
-                onClick={handleClick}
-              >
-                <MenuIcon />
-              </IconButton>
-              <Menu
-                anchorEl={anchorEl}
-                id="basic-menu"
-                open={open}
-                onClose={handleClose}
-              >
-                <MenuItem
-                  onClick={() => {
-                    onClickLogin();
-                    handleClose();
-                  }}
-                >
-                  Login / Register
-                </MenuItem>
-              </Menu>
-            </Box>
-          </>
-        )}
+                  </MenuItem>
+                </Menu>
+              </Box>
+            </>
+          )}
+        </Box>
       </Toolbar>
     </AppBar>
   );

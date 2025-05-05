@@ -1,13 +1,13 @@
-import { useUser } from '@clerk/clerk-react';
+import { useAuth, useUser } from '@clerk/clerk-react';
 import Box from '@mui/system/Box';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import { useSetAtom } from 'jotai';
 import { CSSProperties, FC, useEffect, useRef, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 
-import ButtonComponent from '../components/ButtonComponent';
+import ButtonComponent from '../components/common/ButtonComponent';
 import FormComponent from '../components/FormComponent';
 import JapanMapComponent from '../components/JapanMapComponent';
 import theme from '../config/theme';
@@ -39,24 +39,31 @@ const classes = {
 const TripPlannerPage: FC = () => {
   const navigate = useNavigate();
   const { isSignedIn } = useUser();
+  const { getToken } = useAuth();
   const mainFormMethods = useForm<TravelFormInterface>({
     mode: 'all',
     shouldUnregister: true,
     defaultValues: TRAVEL_FORM_DEFAULT_VALUES,
   });
-  const { getValues: getMainFormValues, handleSubmit } = mainFormMethods;
+  const {
+    getValues: getMainFormValues,
+    handleSubmit,
+    reset: resetMainForm,
+  } = mainFormMethods;
 
   const tripDetailsFormMethods = useForm<{ tripDetails?: string }>({
     mode: 'all',
     shouldUnregister: true,
   });
-  const { reset: resetTripDetails } = tripDetailsFormMethods;
+  const { getValues: getTripDetailsValues, reset: resetTripDetails } =
+    tripDetailsFormMethods;
   const [isGeneratingTripDetails, setIsGeneratingTripDetails] = useState(false);
   const tripDetailsRef = useRef<HTMLDivElement>(null);
   const { openLoader, closeLoader } = useLoader();
   const { openSnackbar } = useSnackbar();
   const setOpenModal = useSetAtom(openModalAtom);
   const setModalProps = useSetAtom(modalPropsAtom);
+  const { state } = useLocation();
 
   const [tripDetails, setTripDetails] = useState('');
   const setDisableAction = useSetAtom(disableActionsAtom);
@@ -75,7 +82,7 @@ const TripPlannerPage: FC = () => {
     } = getMainFormValues();
     try {
       const { data } = await axios.post(
-        `${import.meta.env.VITE_API_URL}/trip/generate`,
+        `${import.meta.env.VITE_API_URL}/generate`,
         {
           destinations,
           lengthOfTrip,
@@ -132,6 +139,117 @@ const TripPlannerPage: FC = () => {
     }
   }, [tripDetails]);
 
+  useEffect(() => {
+    if (!state) {
+      return;
+    }
+
+    const fetchData = async () => {
+      try {
+        const token = await getToken();
+        const { data } = await axios.get(
+          `${import.meta.env.VITE_API_URL}/trip/get/${state}`,
+          {
+            timeout: 10000,
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        setTripDetails(data.tripDetails);
+
+        resetMainForm({
+          destinations: data.destinations,
+          lengthOfTrip: data.lengthOfTrip,
+          arrivalAirport: data.arrivalAirport,
+          departureAirport: data.departureAirport,
+          // timeOfArrival: data.timeOfArrival,
+          // timeOfDeparture: data.timeOfDeparture,
+        });
+
+        resetTripDetails({
+          tripDetails: data.tripDetails,
+        });
+      } catch (error) {
+        window.console.error('Error fetching trip data:', error);
+      }
+    };
+
+    fetchData();
+  }, [getToken, resetMainForm, resetTripDetails, state]);
+
+  const loginAndSave = () => {
+    const {
+      destinations,
+      lengthOfTrip,
+      arrivalAirport,
+      departureAirport,
+      timeOfArrival,
+      timeOfDeparture,
+    } = getMainFormValues();
+
+    const { tripDetails: tripDetailsFormValue } = getTripDetailsValues();
+
+    navigate('/login');
+    setTimeout(() => {
+      sessionStorage.setItem(
+        'savedTrip',
+        JSON.stringify({
+          destinations,
+          lengthOfTrip,
+          arrivalAirport,
+          departureAirport,
+          timeOfArrival,
+          timeOfDeparture,
+          tripDetails: tripDetailsFormValue,
+        })
+      );
+    }, 300);
+  };
+
+  const saveTrip = async () => {
+    const {
+      destinations,
+      lengthOfTrip,
+      arrivalAirport,
+      departureAirport,
+      timeOfArrival,
+      timeOfDeparture,
+    } = getMainFormValues();
+
+    const { tripDetails: tripDetailsFormValue } = getTripDetailsValues();
+
+    try {
+      const token = await getToken();
+      await axios.post(
+        `${import.meta.env.VITE_API_URL}/trip/create`,
+        {
+          destinations,
+          lengthOfTrip,
+          arrivalAirport: arrivalAirport ?? undefined,
+          departureAirport: departureAirport ?? undefined,
+          timeOfArrival: timeOfArrival
+            ? dayjs(timeOfArrival).format(TIME_DISPLAY_FORMAT)
+            : undefined,
+          timeOfDeparture: timeOfDeparture
+            ? dayjs(timeOfDeparture).format(TIME_DISPLAY_FORMAT)
+            : undefined,
+          tripDetails: tripDetailsFormValue,
+        },
+        {
+          timeout: 10000,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      navigate('/trips');
+    } catch (error) {
+      window.console.log(error);
+    }
+  };
+
   return (
     <Box>
       <Box sx={classes.root}>
@@ -173,21 +291,20 @@ const TripPlannerPage: FC = () => {
             {isSignedIn && (
               <Box sx={{ display: 'flex', justifyContent: 'end' }}>
                 <ButtonComponent
-                  disabled
-                  text="Save Trip Details (WIP)"
+                  text="Save Trip Details"
                   type="submit"
                   variant="contained"
+                  onClick={saveTrip}
                 />
               </Box>
             )}
             {!isSignedIn && (
               <Box sx={{ display: 'flex', justifyContent: 'end' }}>
                 <ButtonComponent
-                  disabled
-                  text="Log In to Save Trip Details (WIP)"
+                  text="Log In to Save Trip Details"
                   type="submit"
                   variant="contained"
-                  onClick={() => navigate('/login')}
+                  onClick={loginAndSave}
                 />
               </Box>
             )}

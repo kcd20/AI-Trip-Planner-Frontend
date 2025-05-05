@@ -1,6 +1,6 @@
 import { createContext, FC, PropsWithChildren, useMemo, useState } from 'react';
 
-import SnackbarComponent from '../components/SnackbarComponent';
+import SnackbarComponent from '../components/common/SnackbarComponent';
 
 export type SnackbarContextProps = {
   openSnackbar: () => void;

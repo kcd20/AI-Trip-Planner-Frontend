@@ -7,7 +7,7 @@ import {
   useState,
 } from 'react';
 
-import LoaderComponent from '../components/LoaderComponent';
+import LoaderComponent from '../components/common/LoaderComponent';
 
 export type LoaderContextProps = {
   showLoader: boolean;
@@ -45,7 +45,7 @@ export const LoaderProvider: FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <LoaderContext.Provider value={contextValue}>
-      {showLoader && <LoaderComponent />}
+      {showLoader && <LoaderComponent variant="watch" />}
       {children}
     </LoaderContext.Provider>
   );
