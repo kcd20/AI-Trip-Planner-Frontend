@@ -1,6 +1,6 @@
 import { FormControl, InputLabel } from '@mui/material';
 import Select from '@mui/material/Select';
-import React from 'react';
+import { FC } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
 import { OptionsGroupType } from '../../types/OptionsGroupType';
@@ -13,13 +13,13 @@ interface MultiSelectFieldProps {
   disabled?: boolean;
 }
 
-const GroupSelectFieldBase = ({
+const GroupSelectBase: FC<MultiSelectFieldProps> = ({
   label,
   fieldName,
   options,
   required = false,
   disabled = false,
-}: MultiSelectFieldProps): React.ReactNode => {
+}) => {
   const { control } = useFormContext();
   const clearOption = <option key="none" aria-label="None" value="" />;
   const allOptions = options.map((group) =>
@@ -58,4 +58,4 @@ const GroupSelectFieldBase = ({
   );
 };
 
-export default GroupSelectFieldBase;
+export default GroupSelectBase;

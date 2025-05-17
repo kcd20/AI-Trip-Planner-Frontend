@@ -18,9 +18,9 @@ const FormComponent: FC = () => {
         <LengthOfTripField />
       </Box>
       <Box sx={{ display: 'grid', gap: '3.5rem' }}>
+        <ArrivalAirportField />
+        <DepartureAirportField />
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <ArrivalAirportField />
-          <DepartureAirportField />
           <TimeOfArrivalField />
           <TimeOfDepartureField />
         </LocalizationProvider>

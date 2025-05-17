@@ -1,5 +1,5 @@
 import { Autocomplete, TextField } from '@mui/material';
-import React from 'react';
+import { FC } from 'react';
 import {
   Controller,
   FieldValues,
@@ -21,14 +21,14 @@ interface MultiSelectFieldProps {
   disabled?: boolean;
 }
 
-const MultiAutoCompleteFieldBase = ({
+const MultiAutoCompleteBase: FC<MultiSelectFieldProps> = ({
   label,
   fieldName,
   options,
   required = false,
   rules,
   disabled = false,
-}: MultiSelectFieldProps): React.ReactNode => {
+}) => {
   const { control } = useFormContext();
 
   return (
@@ -55,4 +55,4 @@ const MultiAutoCompleteFieldBase = ({
   );
 };
 
-export default MultiAutoCompleteFieldBase;
+export default MultiAutoCompleteBase;

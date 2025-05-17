@@ -1,10 +1,12 @@
+import { Dayjs } from 'dayjs';
+
 interface TravelFormInterface {
   destinations: string[];
   lengthOfTrip: string;
   arrivalAirport?: string;
   departureAirport?: string;
-  timeOfArrival?: string;
-  timeOfDeparture?: string;
+  timeOfArrival?: Dayjs;
+  timeOfDeparture?: Dayjs;
 }
 
 export default TravelFormInterface;

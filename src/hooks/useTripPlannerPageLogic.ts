@@ -71,6 +71,7 @@ const useTripPlannerPageLogic = ({
       timeOfArrival,
       timeOfDeparture,
     } = getMainFormValues();
+
     try {
       const data = await postGenerateTrip({
         destinations,
@@ -222,14 +223,25 @@ const useTripPlannerPageLogic = ({
           lengthOfTrip: data.lengthOfTrip,
           arrivalAirport: data.arrivalAirport,
           departureAirport: data.departureAirport,
-          timeOfArrival: data.timeOfArrival,
-          timeOfDeparture: data.timeOfDeparture,
+          timeOfArrival: data.timeOfArrival
+            ? dayjs(
+                `${dayjs().format('YYYY-MM-DD')} ${data.timeOfArrival}`,
+                'YYYY-MM-DD hh:mm a'
+              )
+            : undefined,
+          timeOfDeparture: data.timeOfDeparture
+            ? dayjs(
+                `${dayjs().format('YYYY-MM-DD')} ${data.timeOfDeparture}`,
+                'YYYY-MM-DD hh:mm a'
+              )
+            : undefined,
         });
 
         resetTripDetails({
           tripDetails: data.tripDetails,
         });
       } catch (error) {
+        setDisableForm(false);
         window.console.error('Error fetching trip data:', error);
       }
     };

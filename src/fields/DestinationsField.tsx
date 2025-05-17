@@ -8,7 +8,7 @@ import { PREFECTURES } from '../constants';
 import { disableActionsAtom, disableFormAtom } from '../store/atoms';
 import TravelFormInterface from '../types/TravelFormInterface';
 
-import MultiAutoCompleteFieldBase from './base/MultiAutoCompleteFieldBase';
+import MultiAutoCompleteBase from './base/MultiAutoCompleteBase';
 
 const classes = {
   error: {
@@ -26,7 +26,7 @@ const DestinationsField: FC = () => {
   const isActionOnGoing = useAtomValue(disableActionsAtom);
   return (
     <Box>
-      <MultiAutoCompleteFieldBase
+      <MultiAutoCompleteBase
         required
         disabled={disableForm || isActionOnGoing}
         fieldName="destinations"

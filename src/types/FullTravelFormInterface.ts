@@ -1,10 +1,6 @@
-interface FullTravelFormInterface {
-  destinations: string[];
-  lengthOfTrip: string;
-  arrivalAirport?: string;
-  departureAirport?: string;
-  timeOfArrival?: string;
-  timeOfDeparture?: string;
+import TravelFormInterface from './TravelFormInterface';
+
+interface FullTravelFormInterface extends TravelFormInterface {
   tripDetails: string;
 }
 
