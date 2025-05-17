@@ -8,6 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import dayjs from 'dayjs';
 import { Link } from 'react-router';
 
+import { DATE_TIME_DISPLAY_FORMAT } from '../constants';
 import useSavedTripsQuery from '../hooks/useSavedTripsQuery';
 
 const TableHeaders = [
@@ -58,9 +59,13 @@ const SavedTripsComponent: React.FC = () => {
                   </Link>
                 </TableCell>
                 <TableCell align="center">
-                  {dayjs(row.createdOn).toString()}
+                  {dayjs(Number(row.createdOn)).format(
+                    DATE_TIME_DISPLAY_FORMAT
+                  )}
                 </TableCell>
-                <TableCell align="center">{row.destinations}</TableCell>
+                <TableCell align="center">
+                  {row.destinations.join(', ')}
+                </TableCell>
                 <TableCell align="center">{row.lengthOfTrip}</TableCell>
                 <TableCell align="center">{row.arrivalAirport}</TableCell>
                 <TableCell align="center">{row.departureAirport}</TableCell>

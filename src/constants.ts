@@ -90,3 +90,4 @@ export const LOGIN_FORM_DEFAULT_VALUES = {
 };
 
 export const TIME_DISPLAY_FORMAT = 'hh:mm a';
+export const DATE_TIME_DISPLAY_FORMAT = 'DD MMM YYYY, hh:mm a';
