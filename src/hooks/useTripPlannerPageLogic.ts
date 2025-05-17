@@ -77,18 +77,23 @@ const useTripPlannerPageLogic = ({
         lengthOfTrip,
         arrivalAirport,
         departureAirport,
-        timeOfArrival: dayjs(timeOfArrival).format(TIME_DISPLAY_FORMAT),
-        timeOfDeparture: dayjs(timeOfDeparture).format(TIME_DISPLAY_FORMAT),
+        timeOfArrival: timeOfArrival
+          ? dayjs(timeOfArrival).format(TIME_DISPLAY_FORMAT)
+          : undefined,
+        timeOfDeparture: timeOfDeparture
+          ? dayjs(timeOfDeparture).format(TIME_DISPLAY_FORMAT)
+          : undefined,
       });
       setTripDetails(data);
+      setDisableForm(true);
     } catch (error) {
-      setDisableAction(false);
       openSnackbar({
         severity: 'error',
         description:
           'There was an error generating your trip. Please try again.',
       });
     } finally {
+      setDisableAction(false);
       closeWatchLoader();
     }
   };
