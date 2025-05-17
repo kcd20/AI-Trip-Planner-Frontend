@@ -5,7 +5,7 @@ import { CSSProperties, FC } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { PREFECTURES } from '../constants';
-import { disableActionsAtom } from '../store/atoms';
+import { disableActionsAtom, disableFormAtom } from '../store/atoms';
 import TravelFormInterface from '../types/TravelFormInterface';
 
 import MultiAutoCompleteFieldBase from './base/MultiAutoCompleteFieldBase';
@@ -22,12 +22,13 @@ const DestinationsField: FC = () => {
   const {
     formState: { errors },
   } = useFormContext<TravelFormInterface>();
-  const disabled = useAtomValue(disableActionsAtom);
+  const disableForm = useAtomValue(disableFormAtom);
+  const isActionOnGoing = useAtomValue(disableActionsAtom);
   return (
     <Box>
       <MultiAutoCompleteFieldBase
         required
-        disabled={disabled}
+        disabled={disableForm || isActionOnGoing}
         fieldName="destinations"
         label="Prefectures"
         options={PREFECTURES}

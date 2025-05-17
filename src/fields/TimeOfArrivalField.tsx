@@ -1,15 +1,16 @@
 import { useAtomValue } from 'jotai';
 import { FC } from 'react';
 
-import { disableActionsAtom } from '../store/atoms';
+import { disableActionsAtom, disableFormAtom } from '../store/atoms';
 
 import TimePickerBase from './base/TimePickerBase';
 
 const TimeOfArrivalField: FC = () => {
-  const disabled = useAtomValue(disableActionsAtom);
+  const disableForm = useAtomValue(disableFormAtom);
+  const isActionOnGoing = useAtomValue(disableActionsAtom);
   return (
     <TimePickerBase
-      disabled={disabled}
+      disabled={disableForm || isActionOnGoing}
       fieldName="timeOfArrival"
       label="Time of Arrival"
     />

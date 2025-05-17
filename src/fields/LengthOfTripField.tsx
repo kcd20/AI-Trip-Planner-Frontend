@@ -4,7 +4,7 @@ import { useAtomValue } from 'jotai';
 import { CSSProperties, FC } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { disableActionsAtom } from '../store/atoms';
+import { disableActionsAtom, disableFormAtom } from '../store/atoms';
 import TravelFormInterface from '../types/TravelFormInterface';
 
 import TextFieldBase from './base/TextFieldBase';
@@ -21,7 +21,8 @@ const LengthOfTripField: FC = () => {
   const {
     formState: { errors },
   } = useFormContext<TravelFormInterface>();
-  const disabled = useAtomValue(disableActionsAtom);
+  const disableForm = useAtomValue(disableFormAtom);
+  const isActionOnGoing = useAtomValue(disableActionsAtom);
 
   const validateTripLength = (input: string): boolean | string => {
     if (Number(input) > 31) {
@@ -37,7 +38,7 @@ const LengthOfTripField: FC = () => {
     <Box>
       <TextFieldBase
         required
-        disabled={disabled}
+        disabled={disableForm || isActionOnGoing}
         fieldName="lengthOfTrip"
         label="Length of Trip (days)"
         rules={{ required: true, validate: validateTripLength }}

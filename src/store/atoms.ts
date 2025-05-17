@@ -1,6 +1,7 @@
 import { AlertColor } from '@mui/material';
 import { atom } from 'jotai';
 
+export const disableFormAtom = atom(false);
 export const disableActionsAtom = atom(false);
 
 // Snackbar

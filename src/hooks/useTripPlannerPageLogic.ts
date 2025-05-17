@@ -11,6 +11,7 @@ import postSaveTrip from '../api/postSaveTrip';
 import { TIME_DISPLAY_FORMAT } from '../constants';
 import {
   disableActionsAtom,
+  disableFormAtom,
   modalPropsAtom,
   openModalAtom,
 } from '../store/atoms';
@@ -55,6 +56,7 @@ const useTripPlannerPageLogic = ({
   const setOpenModal = useSetAtom(openModalAtom);
   const setModalProps = useSetAtom(modalPropsAtom);
   const setDisableAction = useSetAtom(disableActionsAtom);
+  const setDisableForm = useSetAtom(disableFormAtom);
 
   const [tripDetails, setTripDetails] = useState('');
 
@@ -171,12 +173,12 @@ const useTripPlannerPageLogic = ({
       actionText: 'Proceed to edit?',
       proceedAction: () => {
         setTripDetails('');
-        setDisableAction(false);
+        setDisableForm(false);
         window.scrollTo({ top: 0, behavior: 'smooth' });
         setOpenModal(false);
       },
     });
-  }, [setDisableAction, setModalProps, setOpenModal]);
+  }, [setDisableAction, setDisableForm, setModalProps, setOpenModal]);
 
   /** to prepopulate the trip details */
   useEffect(() => {
@@ -208,6 +210,7 @@ const useTripPlannerPageLogic = ({
         const token = await getToken();
         const data = await getTrip(state, token);
 
+        setDisableForm(true);
         setTripDetails(data.tripDetails);
 
         resetMainForm({
@@ -228,7 +231,14 @@ const useTripPlannerPageLogic = ({
     };
 
     fetchData();
-  }, [getToken, resetMainForm, resetTripDetails, state]);
+  }, [
+    getToken,
+    resetMainForm,
+    resetTripDetails,
+    setDisableAction,
+    setDisableForm,
+    state,
+  ]);
 
   return {
     onClickGenerateTrip,
