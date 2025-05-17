@@ -15,7 +15,7 @@ const postSaveTrip = async (
   token: string | null
 ): Promise<string> => {
   const { data } = await axios.post(
-    `${import.meta.env.VITE_API_URL}/generate`,
+    `${import.meta.env.VITE_API_URL}/trip/create`,
     postSaveTripReq,
     {
       timeout: 10000,

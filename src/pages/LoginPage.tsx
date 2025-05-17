@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import { FC } from 'react';
 
 const LoginPage: FC = () => {
+  const savedTrip = sessionStorage.getItem('savedTrip');
   return (
     <Box
       sx={{
@@ -12,7 +13,10 @@ const LoginPage: FC = () => {
         transform: 'translate(-50%, -50%)',
       }}
     >
-      <SignIn signUpUrl="/register" />
+      <SignIn
+        forceRedirectUrl={savedTrip ? '/trips' : '/'}
+        signUpUrl="/register"
+      />
     </Box>
   );
 };

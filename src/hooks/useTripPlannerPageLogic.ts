@@ -150,21 +150,19 @@ const useTripPlannerPageLogic = ({
 
     const { tripDetails: tripDetailsFormValue } = getTripDetailsValues();
 
+    sessionStorage.setItem(
+      'savedTrip',
+      JSON.stringify({
+        destinations,
+        lengthOfTrip,
+        arrivalAirport,
+        departureAirport,
+        timeOfArrival,
+        timeOfDeparture,
+        tripDetails: tripDetailsFormValue,
+      })
+    );
     navigate('/login');
-    setTimeout(() => {
-      sessionStorage.setItem(
-        'savedTrip',
-        JSON.stringify({
-          destinations,
-          lengthOfTrip,
-          arrivalAirport,
-          departureAirport,
-          timeOfArrival,
-          timeOfDeparture,
-          tripDetails: tripDetailsFormValue,
-        })
-      );
-    }, 300);
   };
 
   const onClickEdit = () => {
@@ -205,6 +203,7 @@ const useTripPlannerPageLogic = ({
     }
   }, [tripDetails]);
 
+  /** for when user clicks on view trip details in saved trips page */
   useEffect(() => {
     if (!state) {
       return;
