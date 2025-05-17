@@ -1,22 +1,26 @@
-import { useContext } from 'react';
+import { useSetAtom } from 'jotai';
 
-import { LoaderContext } from '../providers/LoaderProvider';
+import { loaderAtom } from '../store/atoms';
+import LoaderVariant from '../types/LoaderTypeInterface';
 
-const useLoader = (): {
+const useLoader = (
+  variant: LoaderVariant
+): {
   openLoader: () => void;
   closeLoader: () => void;
 } => {
-  const loaderContext = useContext(LoaderContext);
+  const setLoaderState = useSetAtom(loaderAtom);
 
-  if (!loaderContext) {
-    throw new Error(
-      'Please use useLoader inside the context of LoaderProvider'
-    );
-  }
+  const openLoader = () => {
+    setLoaderState({ openLoader: true, variant });
+  };
 
+  const closeLoader = () => {
+    setLoaderState({ openLoader: false, variant });
+  };
   return {
-    openLoader: loaderContext.openLoader,
-    closeLoader: loaderContext.closeLoader,
+    openLoader,
+    closeLoader,
   };
 };
 

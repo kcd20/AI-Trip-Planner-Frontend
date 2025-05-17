@@ -20,7 +20,11 @@ const ButtonComponent: FC<ButtonComponentProps> = ({
   return (
     <Button
       disabled={disabled}
-      sx={{ textTransform: 'none', padding: '1rem' }}
+      sx={{
+        textTransform: 'none',
+        padding: '1rem 2rem',
+        borderRadius: '0.5rem',
+      }}
       type={type}
       variant={variant}
       onClick={onClick}

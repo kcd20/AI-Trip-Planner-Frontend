@@ -2,13 +2,10 @@ import ErrorIcon from '@mui/icons-material/Error';
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/system/Box';
-import { useAtom, useAtomValue } from 'jotai';
 import { CSSProperties, FC } from 'react';
 
-import theme from '../../config/theme';
-import { modalPropsAtom, openModalAtom } from '../../store/atoms';
-
-import ButtonComponent from './ButtonComponent';
+import theme from '../../../config/theme';
+import ButtonComponent from '../ButtonComponent/ButtonComponent';
 
 const classes = {
   modal: {
@@ -26,7 +23,8 @@ const classes = {
   } as CSSProperties,
   buttons: {
     display: 'flex',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
+    gap: '3rem',
     marginTop: '2rem',
     [theme.breakpoints.down('sm')]: {
       flexDirection: 'column-reverse',
@@ -35,10 +33,21 @@ const classes = {
   } as CSSProperties,
 } as const;
 
-const ModalComponent: FC = () => {
-  const [openModal, setOpenModal] = useAtom(openModalAtom);
-  const modalProps = useAtomValue(modalPropsAtom);
-  const { textOne, textTwo, proceedAction } = modalProps;
+interface ModalComponentProps {
+  openModal: boolean;
+  description: string;
+  actionText: string;
+  proceedAction: () => void;
+  closeModal: () => void;
+}
+
+const ModalComponent: FC<ModalComponentProps> = ({
+  openModal,
+  description,
+  actionText,
+  proceedAction,
+  closeModal,
+}) => {
   return (
     <Modal open={openModal}>
       <Box sx={classes.modal}>
@@ -52,17 +61,17 @@ const ModalComponent: FC = () => {
         >
           <ErrorIcon color="warning" sx={{ width: '3rem', height: '3rem' }} />
           <Typography sx={{ color: 'black', textAlign: 'center' }} variant="h6">
-            {textOne}
+            {description}
           </Typography>
           <Typography sx={{ color: 'black', textAlign: 'center' }} variant="h6">
-            {textTwo}
+            {actionText}
           </Typography>
         </Box>
         <Box sx={classes.buttons}>
           <ButtonComponent
             text="Cancel"
             variant="outlined"
-            onClick={() => setOpenModal(false)}
+            onClick={closeModal}
           />
           <ButtonComponent
             text="Proceed"

@@ -82,8 +82,6 @@ export const TRAVEL_FORM_DEFAULT_VALUES = {
   lengthOfTrip: '',
   arrivalAirport: '',
   departureAirport: '',
-  timeOfArrival: null,
-  timeOfDeparture: null,
 };
 
 export const LOGIN_FORM_DEFAULT_VALUES = {

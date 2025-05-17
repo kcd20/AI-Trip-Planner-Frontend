@@ -1,13 +1,16 @@
 import Box from '@mui/system/Box';
+import { FC } from 'react';
 import { TailSpin, Watch } from 'react-loader-spinner';
 
-type LoaderVariant = 'watch' | 'spin';
+interface LoaderComponentProps {
+  openLoader: boolean;
+  variant: 'spin' | 'watch';
+}
 
-const LoaderComponent = ({
-  variant,
-}: {
-  variant: LoaderVariant;
-}): JSX.Element => {
+const LoaderComponent: FC<LoaderComponentProps> = ({ openLoader, variant }) => {
+  if (!openLoader) {
+    return null;
+  }
   return (
     <Box
       sx={{

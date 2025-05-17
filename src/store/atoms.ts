@@ -1,20 +1,25 @@
+import { AlertColor } from '@mui/material';
 import { atom } from 'jotai';
 
 export const disableActionsAtom = atom(false);
 
 // Snackbar
-export const snackbarAtom = atom(false);
-export const snackbarPropsAtom = atom({
-  textOne: '',
+export const openSnackbarAtom = atom(false);
+export const snackbarAtom = atom({
+  description: '',
+  severity: 'error' as AlertColor,
 });
 
 // Loader
-export const loaderAtom = atom(false);
+export const loaderAtom = atom<{
+  openLoader: boolean;
+  variant: 'spin' | 'watch';
+}>({ openLoader: false, variant: 'spin' });
 
 // Modal
 export const openModalAtom = atom(false);
 export const modalPropsAtom = atom({
-  textOne: '',
-  textTwo: '',
+  description: '',
+  actionText: '',
   proceedAction: () => undefined,
 });

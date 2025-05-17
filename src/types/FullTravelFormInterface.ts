@@ -1,10 +1,11 @@
-interface TravelFormInterface {
+interface FullTravelFormInterface {
   destinations: string[];
   lengthOfTrip: string;
   arrivalAirport?: string;
   departureAirport?: string;
   timeOfArrival?: string;
   timeOfDeparture?: string;
+  tripDetails: string;
 }
 
-export default TravelFormInterface;
+export default FullTravelFormInterface;

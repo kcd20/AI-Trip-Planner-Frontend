@@ -1,20 +1,33 @@
-import { useContext } from 'react';
+import { AlertColor } from '@mui/material';
+import { useSetAtom } from 'jotai';
 
-import { SnackbarContext } from '../providers/SnackbarProvider';
+import { openSnackbarAtom, snackbarAtom } from '../store/atoms';
 
 const useSnackbar = (): {
-  openSnackbar: () => void;
+  openSnackbar: ({
+    description,
+    severity,
+  }: {
+    description: string;
+    severity: AlertColor;
+  }) => void;
 } => {
-  const snackbarContext = useContext(SnackbarContext);
+  const setOpenSnackbar = useSetAtom(openSnackbarAtom);
+  const setSnackbar = useSetAtom(snackbarAtom);
 
-  if (!snackbarContext) {
-    throw new Error(
-      'Please use useLoader inside the context of SnackbarProvider'
-    );
-  }
+  const openSnackbar = ({
+    description,
+    severity,
+  }: {
+    description: string;
+    severity: AlertColor;
+  }) => {
+    setOpenSnackbar(true);
+    setSnackbar({ description, severity });
+  };
 
   return {
-    openSnackbar: snackbarContext.openSnackbar,
+    openSnackbar,
   };
 };
 
