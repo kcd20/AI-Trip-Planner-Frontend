@@ -36,7 +36,7 @@ const classes = {
 interface ModalComponentProps {
   openModal: boolean;
   description: string;
-  actionText: string;
+  actionText?: string;
   proceedAction: () => void;
   closeModal: () => void;
 }
@@ -63,9 +63,14 @@ const ModalComponent: FC<ModalComponentProps> = ({
           <Typography sx={{ color: 'black', textAlign: 'center' }} variant="h6">
             {description}
           </Typography>
-          <Typography sx={{ color: 'black', textAlign: 'center' }} variant="h6">
-            {actionText}
-          </Typography>
+          {actionText && (
+            <Typography
+              sx={{ color: 'black', textAlign: 'center' }}
+              variant="h6"
+            >
+              {actionText}
+            </Typography>
+          )}
         </Box>
         <Box sx={classes.buttons}>
           <ButtonComponent

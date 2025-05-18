@@ -19,8 +19,13 @@ export const loaderAtom = atom<{
 
 // Modal
 export const openModalAtom = atom(false);
-export const modalPropsAtom = atom({
+export const modalPropsAtom = atom<{
+  description: string;
+  actionText?: string;
+  proceedAction: () => void;
+}>({
   description: '',
-  actionText: '',
-  proceedAction: () => undefined,
+  proceedAction: async () => {
+    // default
+  },
 });
