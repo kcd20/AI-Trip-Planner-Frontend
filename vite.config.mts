@@ -1,3 +1,4 @@
+/// <reference types="vitest" />
 import react from '@vitejs/plugin-react';
 import checker from 'vite-plugin-checker'
 import { defineConfig } from 'vite';
@@ -11,4 +12,8 @@ export default defineConfig({
       typescript: true,
     }),
   ],
+  test: {
+    globals: true, // Optional: makes `expect`, `describe`, etc. globally available
+    environment: 'jsdom', // Needed for DOM-related tests
+  },
 });

@@ -5,7 +5,7 @@ import { CSSProperties, FC } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import ButtonComponent from '../components/common/ButtonComponent/ButtonComponent';
-import FormComponent from '../components/FormComponent';
+import FormComponent from '../components/FormComponent/FormComponent';
 import JapanMapComponent from '../components/JapanMapComponent';
 import theme from '../config/theme';
 import { TRAVEL_FORM_DEFAULT_VALUES } from '../constants';

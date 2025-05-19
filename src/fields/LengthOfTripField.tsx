@@ -35,7 +35,7 @@ const LengthOfTripField: FC = () => {
   };
 
   return (
-    <Box>
+    <Box data-testid="lengthOfTripField">
       <TextFieldBase
         required
         disabled={disableForm || isActionOnGoing}

@@ -1,3 +1,4 @@
+import { Box } from '@mui/material';
 import { useAtomValue } from 'jotai';
 import { FC } from 'react';
 
@@ -9,11 +10,14 @@ const TimeOfDepartureField: FC = () => {
   const disableForm = useAtomValue(disableFormAtom);
   const isActionOnGoing = useAtomValue(disableActionsAtom);
   return (
-    <TimePickerBase
-      disabled={disableForm || isActionOnGoing}
-      fieldName="timeOfDeparture"
-      label="Time of Departure"
-    />
+    <Box data-testid="timeOfDepartureField">
+      <TimePickerBase
+        data-testid="timeOfDepartureField"
+        disabled={disableForm || isActionOnGoing}
+        fieldName="timeOfDeparture"
+        label="Time of Departure"
+      />
+    </Box>
   );
 };
 

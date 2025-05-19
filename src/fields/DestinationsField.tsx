@@ -25,7 +25,7 @@ const DestinationsField: FC = () => {
   const disableForm = useAtomValue(disableFormAtom);
   const isActionOnGoing = useAtomValue(disableActionsAtom);
   return (
-    <Box>
+    <Box data-testid="destinationsField">
       <MultiAutoCompleteBase
         required
         disabled={disableForm || isActionOnGoing}
