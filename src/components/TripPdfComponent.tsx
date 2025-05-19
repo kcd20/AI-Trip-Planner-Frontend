@@ -4,9 +4,9 @@ import { FC } from 'react';
 import SavedTripsInterface from '../types/SavedTripsInterface';
 
 const styles = StyleSheet.create({
-  page: { padding: 30 },
-  section: { marginBottom: 10 },
-  title: { fontSize: 20, marginBottom: 10 },
+  page: { padding: 48, fontSize: 14 },
+  title: { fontSize: 20, marginBottom: 10, fontWeight: 'bold' },
+  label: { textDecoration: 'underline' },
 });
 
 const TripPdfComponent: FC<Omit<SavedTripsInterface, 'createdOn' | 'id'>> = ({
@@ -21,27 +21,39 @@ const TripPdfComponent: FC<Omit<SavedTripsInterface, 'createdOn' | 'id'>> = ({
   return (
     <Document>
       <Page size="A4" style={styles.page}>
-        <View style={styles.section}>
+        <View>
           <Text style={styles.title}>Trip</Text>
-          <Text>Prefectures</Text>
+          <Text style={styles.label}>Prefectures</Text>
           <Text>{destinations.join(',')}</Text>
 
-          <Text>Length of Trip (days)</Text>
+          <Text>{'\n'}</Text>
+
+          <Text style={styles.label}>Length of Trip (days)</Text>
           <Text>{lengthOfTrip}</Text>
 
-          <Text>Arrival Airport</Text>
+          <Text>{'\n'}</Text>
+
+          <Text style={styles.label}>Arrival Airport</Text>
           <Text>{arrivalAirport}</Text>
 
-          <Text>Departure Airport</Text>
+          <Text>{'\n'}</Text>
+
+          <Text style={styles.label}>Departure Airport</Text>
           <Text>{departureAirport}</Text>
 
-          <Text>Time of Arrival</Text>
+          <Text>{'\n'}</Text>
+
+          <Text style={styles.label}>Time of Arrival</Text>
           <Text>{timeOfArrival}</Text>
 
-          <Text>Time of Departure</Text>
+          <Text>{'\n'}</Text>
+
+          <Text style={styles.label}>Time of Departure</Text>
           <Text>{timeOfDeparture}</Text>
 
-          <Text>Trip Details</Text>
+          <Text>{'\n'}</Text>
+
+          <Text style={styles.label}>Trip Details</Text>
           <Text>{tripDetails}</Text>
         </View>
       </Page>
