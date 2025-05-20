@@ -39,7 +39,7 @@ const GroupSelectBase: FC<MultiSelectFieldProps> = ({
       name={fieldName}
       render={({ field }) => (
         <FormControl sx={{ width: '100%' }}>
-          <InputLabel disabled={disabled} id={label}>
+          <InputLabel disabled={disabled} htmlFor={fieldName} id={label}>
             {label}
           </InputLabel>
           <Select
@@ -47,6 +47,7 @@ const GroupSelectBase: FC<MultiSelectFieldProps> = ({
             label={label}
             {...field}
             disabled={disabled}
+            id={fieldName}
             required={required}
           >
             {[clearOption, ...allOptions]}

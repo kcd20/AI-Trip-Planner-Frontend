@@ -1,6 +1,14 @@
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { FC } from 'react';
+import { CSSProperties, FC } from 'react';
+
+const classes = {
+  button: {
+    textTransform: 'none',
+    padding: '1rem 2rem',
+    borderRadius: '0.5rem',
+  } as CSSProperties,
+} as const;
 
 interface ButtonComponentProps {
   text: string;
@@ -20,11 +28,7 @@ const ButtonComponent: FC<ButtonComponentProps> = ({
   return (
     <Button
       disabled={disabled}
-      sx={{
-        textTransform: 'none',
-        padding: '1rem 2rem',
-        borderRadius: '0.5rem',
-      }}
+      sx={classes.button}
       type={type}
       variant={variant}
       onClick={onClick}
