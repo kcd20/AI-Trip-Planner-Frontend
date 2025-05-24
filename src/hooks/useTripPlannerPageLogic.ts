@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 import { useSetAtom } from 'jotai';
 import { RefObject, useEffect, useRef, useState } from 'react';
 import { UseFormGetValues, UseFormReset } from 'react-hook-form';
-import { useLocation, useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import getTrip from '../api/getTrip';
 import postGenerateTrip from '../api/postGenerateTrip';

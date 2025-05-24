@@ -3,9 +3,10 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Provider } from 'jotai';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-
 import './index.css';
-import AppRoutes from './routes/AppRoutes';
+import { RouterProvider } from 'react-router-dom';
+
+import Router from './routes/Router';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -26,7 +27,7 @@ createRoot(document.getElementById('root')!).render(
     <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
       <QueryClientProvider client={queryClient}>
         <Provider>
-          <AppRoutes />
+          <RouterProvider router={Router} />
         </Provider>
       </QueryClientProvider>
     </ClerkProvider>

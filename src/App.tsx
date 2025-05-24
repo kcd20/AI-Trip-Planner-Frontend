@@ -1,6 +1,6 @@
 import { useAtom, useAtomValue } from 'jotai';
 import { ReactNode, useCallback } from 'react';
-import { Outlet } from 'react-router';
+import { Outlet } from 'react-router-dom';
 
 import LoaderComponent from './components/common/LoaderComponent/LoaderComponent';
 import ModalComponent from './components/common/ModalComponent/ModalComponent';

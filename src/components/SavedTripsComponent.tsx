@@ -12,7 +12,7 @@ import { PDFDownloadLink } from '@react-pdf/renderer';
 import { useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { useSetAtom } from 'jotai';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 
 import deleteTrip from '../api/deleteTrip';
 import { DATE_DISPLAY_FORMAT, DATE_TIME_DISPLAY_FORMAT } from '../constants';
