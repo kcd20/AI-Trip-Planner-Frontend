@@ -31,6 +31,9 @@ const classes = {
       gap: '1rem',
     },
   } as CSSProperties,
+  error: { width: '3rem', height: '3rem' } as CSSProperties,
+  description: { color: 'black', textAlign: 'center' } as CSSProperties,
+  actionText: { color: 'black', textAlign: 'center' } as CSSProperties,
 } as const;
 
 interface ModalComponentProps {
@@ -59,15 +62,12 @@ const ModalComponent: FC<ModalComponentProps> = ({
             gap: '1rem',
           }}
         >
-          <ErrorIcon color="warning" sx={{ width: '3rem', height: '3rem' }} />
-          <Typography sx={{ color: 'black', textAlign: 'center' }} variant="h6">
+          <ErrorIcon color="warning" sx={classes.error} />
+          <Typography sx={classes.description} variant="h6">
             {description}
           </Typography>
           {actionText && (
-            <Typography
-              sx={{ color: 'black', textAlign: 'center' }}
-              variant="h6"
-            >
+            <Typography sx={classes.actionText} variant="h6">
               {actionText}
             </Typography>
           )}

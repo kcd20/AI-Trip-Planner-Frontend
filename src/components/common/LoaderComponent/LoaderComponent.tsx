@@ -1,6 +1,15 @@
 import Box from '@mui/system/Box';
-import { FC } from 'react';
+import { CSSProperties, FC } from 'react';
 import { TailSpin, Watch } from 'react-loader-spinner';
+
+const classes = {
+  loader: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+  } as CSSProperties,
+} as const;
 
 interface LoaderComponentProps {
   openLoader: boolean;
@@ -12,14 +21,7 @@ const LoaderComponent: FC<LoaderComponentProps> = ({ openLoader, variant }) => {
     return null;
   }
   return (
-    <Box
-      sx={{
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-      }}
-    >
+    <Box sx={classes.loader}>
       {variant === 'watch' && (
         <Watch
           visible
@@ -28,8 +30,6 @@ const LoaderComponent: FC<LoaderComponentProps> = ({ openLoader, variant }) => {
           height="80"
           radius="48"
           width="80"
-          wrapperClass=""
-          wrapperStyle={{}}
         />
       )}
       {variant === 'spin' && (
@@ -40,8 +40,6 @@ const LoaderComponent: FC<LoaderComponentProps> = ({ openLoader, variant }) => {
           height="80"
           radius="1"
           width="80"
-          wrapperClass=""
-          wrapperStyle={{}}
         />
       )}
     </Box>
