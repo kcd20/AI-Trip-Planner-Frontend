@@ -7,7 +7,7 @@ import LoaderComponent from '../components/common/LoaderComponent/LoaderComponen
 
 const TripPlannerPage = lazy(() => import('../pages/TripPlannerPage'));
 const SavedTripsPage = lazy(() => import('../pages/SavedTripsPage'));
-const LoginPage = lazy(() => import('../pages/LoginPage'));
+const LoginPage = lazy(() => import('../pages/LoginPage/LoginPage'));
 const RegisterPage = lazy(() => import('../pages/RegisterPage'));
 
 const Router = createBrowserRouter([
