@@ -1,1 +1,1 @@
-This repository hosts the frontend for an AI-powered trip planning application. This application leverages cutting-edge AI to generate personalized travel itineraries, making your vacation planning effortless and enjoyable.
+This repository hosts the frontend for an AI-powered trip planning application. This application leverages the Google Gemini AI to generate personalized travel itineraries, making your vacation planning effortless and enjoyable.
