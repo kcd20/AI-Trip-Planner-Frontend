@@ -5,7 +5,6 @@ import LoginPage from './LoginPage';
 
 import '@testing-library/jest-dom';
 
-// Mock Clerk's SignIn component
 vi.mock('@clerk/clerk-react', () => ({
   SignIn: vi.fn((props) => (
     <div data-testid="mock-clerk-sign-in">

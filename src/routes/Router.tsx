@@ -5,10 +5,14 @@ import { createBrowserRouter } from 'react-router-dom';
 import App from '../App';
 import LoaderComponent from '../components/common/LoaderComponent/LoaderComponent';
 
-const TripPlannerPage = lazy(() => import('../pages/TripPlannerPage'));
-const SavedTripsPage = lazy(() => import('../pages/SavedTripsPage'));
+const TripPlannerPage = lazy(
+  () => import('../pages/TripPlannerPage/TripPlannerPage')
+);
+const SavedTripsPage = lazy(
+  () => import('../pages/SavedTripsPage/SavedTripsPage')
+);
 const LoginPage = lazy(() => import('../pages/LoginPage/LoginPage'));
-const RegisterPage = lazy(() => import('../pages/RegisterPage'));
+const RegisterPage = lazy(() => import('../pages/RegisterPage/RegisterPage'));
 
 const Router = createBrowserRouter([
   {

@@ -4,15 +4,15 @@ import { useAtomValue } from 'jotai';
 import { CSSProperties, FC } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
-import ButtonComponent from '../components/common/ButtonComponent/ButtonComponent';
-import FormComponent from '../components/FormComponent/FormComponent';
-import JapanMapComponent from '../components/JapanMapComponent';
-import theme from '../config/theme';
-import { TRAVEL_FORM_DEFAULT_VALUES } from '../constants';
-import TripDetailsField from '../fields/TripDetailsField';
-import useTripPlannerPageLogic from '../hooks/useTripPlannerPageLogic';
-import { disableActionsAtom } from '../store/atoms';
-import TravelFormInterface from '../types/TravelFormInterface';
+import ButtonComponent from '../../components/common/ButtonComponent/ButtonComponent';
+import FormComponent from '../../components/FormComponent/FormComponent';
+import JapanMapComponent from '../../components/JapanMapComponent';
+import theme from '../../config/theme';
+import { TRAVEL_FORM_DEFAULT_VALUES } from '../../constants';
+import TripDetailsField from '../../fields/TripDetailsField';
+import useTripPlannerPageLogic from '../../hooks/useTripPlannerPageLogic';
+import { disableActionsAtom } from '../../store/atoms';
+import TravelFormInterface from '../../types/TravelFormInterface';
 
 const classes = {
   root: {
