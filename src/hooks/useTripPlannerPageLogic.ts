@@ -17,7 +17,7 @@ import {
 } from '../store/atoms';
 import TravelFormInterface from '../types/TravelFormInterface';
 
-import useLoader from './useLoader';
+import useLoader from './useLoader/useLoader';
 import useSnackbar from './useSnackbar';
 
 interface UseTripPlannerPageLogicParamsInterface {

@@ -8,7 +8,7 @@ import { TIME_DISPLAY_FORMAT } from '../constants';
 import FullTravelFormInterface from '../types/FullTravelFormInterface';
 import SavedTripsInterface from '../types/SavedTripsInterface';
 
-import useLoader from './useLoader';
+import useLoader from './useLoader/useLoader';
 
 const useSavedTripsQuery = (): UseQueryResult<SavedTripsInterface[], Error> => {
   const { getToken } = useAuth();

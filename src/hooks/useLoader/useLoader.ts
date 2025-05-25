@@ -1,7 +1,7 @@
 import { useSetAtom } from 'jotai';
 
-import { loaderAtom } from '../store/atoms';
-import LoaderVariant from '../types/LoaderTypeInterface';
+import { loaderAtom } from '../../store/atoms';
+import LoaderVariant from '../../types/LoaderTypeInterface';
 
 const useLoader = (
   variant: LoaderVariant
