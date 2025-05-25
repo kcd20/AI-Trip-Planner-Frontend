@@ -6,7 +6,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 
 import ButtonComponent from '../../components/common/ButtonComponent/ButtonComponent';
 import FormComponent from '../../components/FormComponent/FormComponent';
-import JapanMapComponent from '../../components/JapanMapComponent';
+import JapanMapComponent from '../../components/JapanMapComponent/JapanMapComponent';
 import theme from '../../config/theme';
 import { TRAVEL_FORM_DEFAULT_VALUES } from '../../constants';
 import TripDetailsField from '../../fields/TripDetailsField';

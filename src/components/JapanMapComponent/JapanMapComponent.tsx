@@ -2,8 +2,8 @@ import Box from '@mui/system/Box';
 import { CSSProperties, FC } from 'react';
 import { useWatch } from 'react-hook-form';
 
-import theme from '../config/theme';
-import getSelectedPrefectureColor from '../utils/getSelectedPrefectureColor';
+import theme from '../../config/theme';
+import getSelectedPrefectureColor from '../../utils/getSelectedPrefectureColor';
 
 const classes = {
   root: {
@@ -20,7 +20,7 @@ const JapanMapComponent: FC = () => {
   const currentSelectedPrefectures = useWatch({ name: 'destinations' });
 
   return (
-    <Box sx={classes.root}>
+    <Box data-testid="japanMapComponent" sx={classes.root}>
       <svg
         baseProfile="tiny"
         fill="#d9d9d9"
