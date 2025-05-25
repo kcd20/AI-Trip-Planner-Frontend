@@ -19,7 +19,7 @@ import { DATE_DISPLAY_FORMAT, DATE_TIME_DISPLAY_FORMAT } from '../constants';
 import useSavedTripsQuery from '../hooks/useSavedTripsQuery';
 import { modalPropsAtom, openModalAtom } from '../store/atoms';
 
-import TripPdfComponent from './TripPdfComponent';
+import TripPdfComponent from './TripPdfComponent/TripPdfComponent';
 
 const TableHeaders = [
   'Trip',

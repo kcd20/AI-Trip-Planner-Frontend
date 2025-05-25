@@ -1,7 +1,7 @@
 import { Document, Page, StyleSheet, Text, View } from '@react-pdf/renderer';
 import { FC } from 'react';
 
-import SavedTripsInterface from '../types/SavedTripsInterface';
+import SavedTripsInterface from '../../types/SavedTripsInterface';
 
 const styles = StyleSheet.create({
   page: { padding: 48, fontSize: 14 },
