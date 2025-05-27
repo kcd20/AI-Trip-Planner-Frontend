@@ -4,18 +4,25 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { CSSProperties, FC } from 'react';
 
+import theme from '../../config/theme';
 import useNavbarComponentLogic from '../../hooks/useNavbarComponentLogic';
 
 const classes = {
-  root: { textTransform: 'none' } as CSSProperties,
+  root: {
+    display: 'block',
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
+    },
+  } as CSSProperties,
+  button: { textTransform: 'none' } as CSSProperties,
 } as const;
 
 const NavbarSavedTripsComponent: FC = () => {
   const { onClickSavedTrips } = useNavbarComponentLogic();
   return (
-    <Box>
+    <Box sx={classes.root}>
       <SignedIn>
-        <Button color="inherit" sx={classes.root}>
+        <Button color="inherit" sx={classes.button}>
           <Typography component="div" variant="h6" onClick={onClickSavedTrips}>
             Saved Trips
           </Typography>

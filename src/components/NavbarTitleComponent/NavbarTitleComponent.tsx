@@ -17,7 +17,11 @@ const classes = {
 const NavbarTitleComponent: FC = () => {
   const { onClickLandingPage } = useNavbarComponentLogic();
   return (
-    <Box sx={classes.root} onClick={onClickLandingPage}>
+    <Box
+      data-testid="NavbarTitleComponent"
+      sx={classes.root}
+      onClick={onClickLandingPage}
+    >
       <AirplanemodeActiveIcon sx={classes.icon} />
 
       <Typography component="div" variant="h6" onClick={onClickLandingPage}>

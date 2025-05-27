@@ -5,7 +5,7 @@ import { Outlet } from 'react-router-dom';
 import LoaderComponent from './components/common/LoaderComponent/LoaderComponent';
 import ModalComponent from './components/common/ModalComponent/ModalComponent';
 import SnackbarComponent from './components/common/SnackbarComponent/SnackbarComponent';
-import NavbarComponent from './components/NavbarComponent';
+import NavbarComponent from './components/NavbarComponent/NavbarComponent';
 import {
   loaderAtom,
   modalPropsAtom,

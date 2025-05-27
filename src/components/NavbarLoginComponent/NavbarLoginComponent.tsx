@@ -1,4 +1,4 @@
-import { SignedIn, SignedOut, UserButton } from '@clerk/clerk-react';
+import { SignedIn, SignedOut, useClerk, UserButton } from '@clerk/clerk-react';
 import MenuIcon from '@mui/icons-material/Menu';
 import { IconButton, Menu, MenuItem } from '@mui/material';
 import Box from '@mui/material/Box';
@@ -11,8 +11,10 @@ import useNavbarComponentLogic from '../../hooks/useNavbarComponentLogic';
 
 const classes = {
   buttonText: { textTransform: 'none' } as CSSProperties,
+  menuText: { margin: 'auto' } as CSSProperties,
   login: {
-    display: 'block',
+    display: 'flex',
+    alignItems: 'center',
     [theme.breakpoints.down('sm')]: {
       display: 'none',
     },
@@ -26,9 +28,15 @@ const classes = {
 } as const;
 
 const NavbarLoginComponent: FC = () => {
-  const { onClickLogin, anchorEl, open, handleClick, handleClose } =
-    useNavbarComponentLogic();
-
+  const {
+    onClickLogin,
+    onClickSavedTrips,
+    anchorEl,
+    open,
+    handleClick,
+    handleClose,
+  } = useNavbarComponentLogic();
+  const { signOut } = useClerk();
   return (
     <Box>
       <Box sx={classes.login}>
@@ -63,14 +71,42 @@ const NavbarLoginComponent: FC = () => {
           open={open}
           onClose={handleClose}
         >
-          <MenuItem
-            onClick={() => {
-              onClickLogin();
-              handleClose();
-            }}
-          >
-            Login / Register
-          </MenuItem>
+          <SignedOut>
+            <MenuItem
+              onClick={() => {
+                onClickLogin();
+                handleClose();
+              }}
+            >
+              Login / Register
+            </MenuItem>
+          </SignedOut>
+          <SignedIn>
+            <MenuItem
+              onClick={() => {
+                onClickSavedTrips();
+                handleClose();
+              }}
+            >
+              <Typography
+                sx={classes.menuText}
+                variant="h6"
+                onClick={onClickSavedTrips}
+              >
+                Saved Trips
+              </Typography>
+            </MenuItem>
+            <hr />
+            <MenuItem onClick={() => signOut()}>
+              <Typography
+                sx={classes.menuText}
+                variant="h6"
+                onClick={onClickSavedTrips}
+              >
+                Sign Out
+              </Typography>
+            </MenuItem>
+          </SignedIn>
         </Menu>
       </Box>
     </Box>

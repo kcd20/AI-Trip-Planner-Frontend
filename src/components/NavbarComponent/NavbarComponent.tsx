@@ -3,11 +3,10 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import { CSSProperties, FC } from 'react';
 
-import useNavbarComponentLogic from '../hooks/useNavbarComponentLogic';
-
-import NavbarLoginComponent from './NavbarLoginComponent/NavbarLoginComponent';
-import NavbarSavedTripsComponent from './NavbarSavedTripsComponent/NavbarSavedTripsComponent';
-import NavbarTitleComponent from './NavbarTitleComponent/NavbarTitleComponent';
+import useNavbarComponentLogic from '../../hooks/useNavbarComponentLogic';
+import NavbarLoginComponent from '../NavbarLoginComponent/NavbarLoginComponent';
+import NavbarSavedTripsComponent from '../NavbarSavedTripsComponent/NavbarSavedTripsComponent';
+import NavbarTitleComponent from '../NavbarTitleComponent/NavbarTitleComponent';
 
 const classes = {
   toolbar: {
