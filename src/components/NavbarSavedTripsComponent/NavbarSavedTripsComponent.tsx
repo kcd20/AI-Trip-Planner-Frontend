@@ -20,7 +20,7 @@ const classes = {
 const NavbarSavedTripsComponent: FC = () => {
   const { onClickSavedTrips } = useNavbarComponentLogic();
   return (
-    <Box sx={classes.root}>
+    <Box data-testid="NavbarSavedTripsComponent" sx={classes.root}>
       <SignedIn>
         <Button color="inherit" sx={classes.button}>
           <Typography component="div" variant="h6" onClick={onClickSavedTrips}>
