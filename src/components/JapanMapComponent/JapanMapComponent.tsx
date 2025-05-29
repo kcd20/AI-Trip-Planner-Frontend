@@ -3,7 +3,7 @@ import { CSSProperties, FC } from 'react';
 import { useWatch } from 'react-hook-form';
 
 import theme from '../../config/theme';
-import getSelectedPrefectureColor from '../../utils/getSelectedPrefectureColor';
+import getSelectedPrefectureColor from '../../utils/getSelectedPrefectureColor/getSelectedPrefectureColor';
 
 const classes = {
   root: {
