@@ -1,64 +1,53 @@
 import { useAuth } from '@clerk/clerk-react';
 import dayjs from 'dayjs';
 import { useSetAtom } from 'jotai';
-import { RefObject, useEffect, useRef, useState } from 'react';
+import { useEffect } from 'react';
 import { UseFormGetValues, UseFormReset } from 'react-hook-form';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
-import getTrip from '../api/getTrip';
-import postGenerateTrip from '../api/postGenerateTrip';
-import postSaveTrip from '../api/postSaveTrip';
-import { TIME_DISPLAY_FORMAT } from '../constants';
+import getTrip from '../../api/getTrip';
+import postGenerateTrip from '../../api/postGenerateTrip';
+import { TIME_DISPLAY_FORMAT } from '../../constants';
 import {
   disableActionsAtom,
   disableFormAtom,
   modalPropsAtom,
   openModalAtom,
-} from '../store/atoms';
-import TravelFormInterface from '../types/TravelFormInterface';
+  tripDetailsAtom,
+} from '../../store/atoms';
+import TravelFormInterface from '../../types/TravelFormInterface';
+import useLoader from '../useLoader/useLoader';
+import useSnackbar from '../useSnackbar';
 
-import useLoader from './useLoader/useLoader';
-import useSnackbar from './useSnackbar';
-
-interface UseTripPlannerPageLogicParamsInterface {
+interface UseFormMapDisplayComponentLogicParamsInterface {
   getMainFormValues: UseFormGetValues<TravelFormInterface>;
-  getTripDetailsValues: UseFormGetValues<{
-    tripDetails?: string;
-  }>;
   resetMainForm: UseFormReset<TravelFormInterface>;
   resetTripDetails: UseFormReset<{
     tripDetails?: string;
   }>;
 }
-interface UseTripPlannerPageLogicReturnInterface {
-  onClickGenerateTrip: () => Promise<void>;
-  tripDetails: string;
-  saveTrip: () => Promise<void>;
-  tripDetailsRef: RefObject<HTMLDivElement | null>;
-  loginAndSave: () => void;
+
+interface UseFormMapDisplayComponentLogicReturnInterface {
   onClickEdit: () => void;
+  onClickGenerateTrip: () => Promise<void>;
 }
 
-const useTripPlannerPageLogic = ({
+const useFormMapDisplayComponentLogic = ({
   getMainFormValues,
-  getTripDetailsValues,
-  resetTripDetails,
   resetMainForm,
-}: UseTripPlannerPageLogicParamsInterface): UseTripPlannerPageLogicReturnInterface => {
+  resetTripDetails,
+}: UseFormMapDisplayComponentLogicParamsInterface): UseFormMapDisplayComponentLogicReturnInterface => {
   const { openLoader: openWatchLoader, closeLoader: closeWatchLoader } =
     useLoader('watch');
   const { openSnackbar } = useSnackbar();
   const { getToken } = useAuth();
-  const navigate = useNavigate();
   const { state } = useLocation();
-  const tripDetailsRef = useRef<HTMLDivElement>(null);
 
   const setOpenModal = useSetAtom(openModalAtom);
   const setModalProps = useSetAtom(modalPropsAtom);
   const setDisableAction = useSetAtom(disableActionsAtom);
   const setDisableForm = useSetAtom(disableFormAtom);
-
-  const [tripDetails, setTripDetails] = useState('');
+  const setTripDetails = useSetAtom(tripDetailsAtom);
 
   const onClickGenerateTrip = async () => {
     openWatchLoader();
@@ -99,78 +88,7 @@ const useTripPlannerPageLogic = ({
     }
   };
 
-  const saveTrip = async () => {
-    const {
-      destinations,
-      lengthOfTrip,
-      arrivalAirport,
-      departureAirport,
-      timeOfArrival,
-      timeOfDeparture,
-    } = getMainFormValues();
-
-    const { tripDetails: tripDetailsFormValue } = getTripDetailsValues();
-
-    if (!tripDetailsFormValue) {
-      throw new Error('Trip details is undefined');
-    }
-
-    try {
-      const token = await getToken();
-      await postSaveTrip(
-        {
-          destinations,
-          lengthOfTrip,
-          arrivalAirport: arrivalAirport ?? undefined,
-          departureAirport: departureAirport ?? undefined,
-          timeOfArrival: timeOfArrival
-            ? dayjs(timeOfArrival).format(TIME_DISPLAY_FORMAT)
-            : undefined,
-          timeOfDeparture: timeOfDeparture
-            ? dayjs(timeOfDeparture).format(TIME_DISPLAY_FORMAT)
-            : undefined,
-          tripDetails: tripDetailsFormValue,
-        },
-        token
-      );
-      navigate('/trips');
-    } catch (error) {
-      window.console.log(error);
-    }
-  };
-
-  const loginAndSave = () => {
-    const {
-      destinations,
-      lengthOfTrip,
-      arrivalAirport,
-      departureAirport,
-      timeOfArrival,
-      timeOfDeparture,
-    } = getMainFormValues();
-
-    const { tripDetails: tripDetailsFormValue } = getTripDetailsValues();
-
-    sessionStorage.setItem(
-      'savedTrip',
-      JSON.stringify({
-        destinations,
-        lengthOfTrip,
-        arrivalAirport,
-        departureAirport,
-        timeOfArrival,
-        timeOfDeparture,
-        tripDetails: tripDetailsFormValue,
-      })
-    );
-    navigate('/login');
-  };
-
   const onClickEdit = () => {
-    setOpenModal(true);
-  };
-
-  useEffect(() => {
     setModalProps({
       description:
         'Editing your trip details will remove the generated itinerary.',
@@ -182,27 +100,8 @@ const useTripPlannerPageLogic = ({
         setOpenModal(false);
       },
     });
-  }, [setDisableAction, setDisableForm, setModalProps, setOpenModal]);
-
-  /** to prepopulate the trip details */
-  useEffect(() => {
-    if (tripDetails && tripDetailsRef.current) {
-      resetTripDetails({ tripDetails });
-    }
-  }, [resetTripDetails, tripDetails]);
-
-  /** to scroll to the trip details section */
-  useEffect(() => {
-    if (tripDetails && tripDetailsRef.current) {
-      const targetPosition =
-        tripDetailsRef.current.getBoundingClientRect().top +
-        window.scrollY -
-        20;
-      setTimeout(() => {
-        window.scrollTo({ top: targetPosition, behavior: 'smooth' });
-      }, 500);
-    }
-  }, [tripDetails]);
+    setOpenModal(true);
+  };
 
   /** for when user clicks on view trip details in saved trips page */
   useEffect(() => {
@@ -253,17 +152,14 @@ const useTripPlannerPageLogic = ({
     resetTripDetails,
     setDisableAction,
     setDisableForm,
+    setTripDetails,
     state,
   ]);
 
   return {
     onClickGenerateTrip,
     onClickEdit,
-    tripDetails,
-    saveTrip,
-    tripDetailsRef,
-    loginAndSave,
   };
 };
 
-export default useTripPlannerPageLogic;
+export default useFormMapDisplayComponentLogic;

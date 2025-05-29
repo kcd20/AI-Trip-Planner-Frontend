@@ -29,3 +29,6 @@ export const modalPropsAtom = atom<{
     // default
   },
 });
+
+// Trip details
+export const tripDetailsAtom = atom('');
