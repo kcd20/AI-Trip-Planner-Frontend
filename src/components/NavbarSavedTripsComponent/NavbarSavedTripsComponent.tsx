@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import { CSSProperties, FC } from 'react';
 
 import theme from '../../config/theme';
-import useNavbarComponentLogic from '../../hooks/useNavbarComponentLogic';
+import useNavbarComponentLogic from '../../hooks/useNavbarComponentLogic/useNavbarComponentLogic';
 
 const classes = {
   root: {

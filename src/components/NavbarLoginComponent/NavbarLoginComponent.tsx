@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import { CSSProperties, FC } from 'react';
 
 import theme from '../../config/theme';
-import useNavbarComponentLogic from '../../hooks/useNavbarComponentLogic';
+import useNavbarComponentLogic from '../../hooks/useNavbarComponentLogic/useNavbarComponentLogic';
 
 const classes = {
   buttonText: { textTransform: 'none' } as CSSProperties,
@@ -38,7 +38,7 @@ const NavbarLoginComponent: FC = () => {
   } = useNavbarComponentLogic();
   const { signOut } = useClerk();
   return (
-    <Box>
+    <Box data-testid="NavbarLoginComponent">
       <Box sx={classes.login}>
         <SignedOut>
           <Button
@@ -59,6 +59,7 @@ const NavbarLoginComponent: FC = () => {
         <IconButton
           aria-label="menu"
           color="inherit"
+          datatest-id="MenuButton"
           edge="start"
           size="large"
           onClick={handleClick}

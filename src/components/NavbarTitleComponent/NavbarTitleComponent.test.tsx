@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, Mock, vi } from 'vitest';
 
-import useNavbarComponentLogic from '../../hooks/useNavbarComponentLogic'; // Adjust path if needed
+import useNavbarComponentLogic from '../../hooks/useNavbarComponentLogic/useNavbarComponentLogic'; // Adjust path if needed
 
 import NavbarTitleComponent from './NavbarTitleComponent';
 

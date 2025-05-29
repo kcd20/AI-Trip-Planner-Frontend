@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { CSSProperties, FC } from 'react';
 
-import useNavbarComponentLogic from '../../hooks/useNavbarComponentLogic';
+import useNavbarComponentLogic from '../../hooks/useNavbarComponentLogic/useNavbarComponentLogic';
 
 const classes = {
   root: {
