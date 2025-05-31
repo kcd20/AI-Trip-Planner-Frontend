@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { MemoryRouter } from 'react-router-dom';
 import { describe, expect, it, Mock, vi } from 'vitest';
 
 import useNavbarComponentLogic from '../../hooks/useNavbarComponentLogic/useNavbarComponentLogic'; // Adjust path if needed
@@ -19,7 +20,7 @@ describe('NavbarTitleComponent', () => {
       onClickLandingPage: mockOnClickLandingPage,
     });
 
-    render(<NavbarTitleComponent />);
+    render(<NavbarTitleComponent />, { wrapper: MemoryRouter });
 
     await userEvent.click(screen.getByTestId('NavbarTitleComponent'));
 
@@ -27,13 +28,13 @@ describe('NavbarTitleComponent', () => {
   });
 
   it('renders the AirplanemodeActiveIcon', () => {
-    render(<NavbarTitleComponent />);
+    render(<NavbarTitleComponent />, { wrapper: MemoryRouter });
     const iconElement = screen.getByTestId('AirplanemodeActiveIcon');
     expect(iconElement).toBeInTheDocument();
   });
 
   it('renders the correct title text', () => {
-    render(<NavbarTitleComponent />);
+    render(<NavbarTitleComponent />, { wrapper: MemoryRouter });
     const titleElement = screen.getByText('AI Japan Trip Planner');
     expect(titleElement).toBeInTheDocument();
   });
