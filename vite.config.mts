@@ -15,5 +15,11 @@ export default defineConfig({
   test: {
     globals: true, // Optional: makes `expect`, `describe`, etc. globally available
     environment: 'jsdom', // Needed for DOM-related tests
+    exclude: [
+      '**/node_modules/**',
+      '**/dist/**',
+      '**/*.spec.ts',       // Exclude files ending with .automation.spec.ts
+      // Add more patterns as needed
+    ],
   },
 });
