@@ -4,10 +4,12 @@ import { IconButton, Menu, MenuItem } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import { useAtomValue } from 'jotai';
 import { CSSProperties, FC } from 'react';
 
 import theme from '../../config/theme';
 import useNavbarComponentLogic from '../../hooks/useNavbarComponentLogic/useNavbarComponentLogic';
+import { disableActionsAtom } from '../../store/atoms';
 
 const classes = {
   buttonText: { textTransform: 'none' } as CSSProperties,
@@ -37,12 +39,14 @@ const NavbarLoginComponent: FC = () => {
     handleClose,
   } = useNavbarComponentLogic();
   const { signOut } = useClerk();
+  const disabled = useAtomValue(disableActionsAtom);
   return (
     <Box data-testid="NavbarLoginComponent">
       <Box sx={classes.login}>
         <SignedOut>
           <Button
             color="inherit"
+            disabled={disabled}
             sx={classes.buttonText}
             onClick={onClickLogin}
           >
