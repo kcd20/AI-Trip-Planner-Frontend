@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 import NavbarComponent from './NavbarComponent';
@@ -20,7 +21,7 @@ vi.mock('../NavbarTitleComponent/NavbarTitleComponent', () => ({
 }));
 
 const mockUseNavbarComponentLogic = vi.fn();
-vi.mock('../../hooks/useNavbarComponentLogic', () => ({
+vi.mock('../../hooks/useNavbarComponentLogic/useNavbarComponentLogic', () => ({
   default: () => mockUseNavbarComponentLogic(),
 }));
 
@@ -34,7 +35,7 @@ describe('NavbarComponent', () => {
       isOnLoginOrRegisterPage: false,
     });
 
-    render(<NavbarComponent />);
+    render(<NavbarComponent />, { wrapper: MemoryRouter });
 
     expect(screen.getByTestId('NavbarTitleComponent')).toBeInTheDocument();
     expect(screen.getByTestId('NavbarSavedTripsComponent')).toBeInTheDocument();
@@ -46,7 +47,7 @@ describe('NavbarComponent', () => {
       isOnLoginOrRegisterPage: true,
     });
 
-    render(<NavbarComponent />);
+    render(<NavbarComponent />, { wrapper: MemoryRouter });
 
     expect(screen.getByTestId('NavbarTitleComponent')).toBeInTheDocument();
     expect(screen.getByTestId('NavbarSavedTripsComponent')).toBeInTheDocument();
