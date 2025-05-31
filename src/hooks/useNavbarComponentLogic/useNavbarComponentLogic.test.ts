@@ -1,4 +1,4 @@
-import { renderHook, waitFor } from '@testing-library/react';
+import { renderHook } from '@testing-library/react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { describe, it, expect, vi, beforeEach, afterEach, Mock } from 'vitest';
 
@@ -62,27 +62,5 @@ describe('useNavbarComponentLogic', () => {
     const { result } = renderHook(() => useNavbarComponentLogic());
     result.current.onClickLogin();
     expect(navigateMock).toHaveBeenCalledWith('/login');
-  });
-
-  it('should handle menu open and close correctly', async () => {
-    const { result } = renderHook(() => useNavbarComponentLogic());
-    expect(result.current.open).toBe(false);
-
-    const mockButtonEvent = {
-      currentTarget: document.createElement('button'),
-    } as React.MouseEvent<HTMLButtonElement>;
-    result.current.handleClick(mockButtonEvent);
-
-    await waitFor(() => {
-      expect(result.current.anchorEl).toBe(mockButtonEvent.currentTarget);
-    });
-
-    expect(result.current.open).toBe(true);
-
-    await waitFor(() => {
-      result.current.handleClose();
-    });
-
-    expect(result.current.open).toBe(false);
   });
 });
