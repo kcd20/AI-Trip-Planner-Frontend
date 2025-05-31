@@ -1,4 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import { vi } from 'vitest';
 
 import NavbarSavedTripsComponent from './NavbarSavedTripsComponent';
@@ -6,7 +7,7 @@ import NavbarSavedTripsComponent from './NavbarSavedTripsComponent';
 import '@testing-library/jest-dom';
 
 const mockOnClickSavedTrips = vi.fn();
-vi.mock('../../hooks/useNavbarComponentLogic', () => ({
+vi.mock('../../hooks/useNavbarComponentLogic/useNavbarComponentLogic', () => ({
   default: () => ({
     onClickSavedTrips: mockOnClickSavedTrips,
   }),
@@ -22,7 +23,7 @@ describe('NavbarSavedTripsComponent', () => {
   });
 
   it('renders correctly and calls onClickSavedTrips on click', () => {
-    render(<NavbarSavedTripsComponent />);
+    render(<NavbarSavedTripsComponent />, { wrapper: MemoryRouter });
 
     const savedTripsText = screen.getByText('Saved Trips');
     expect(savedTripsText).toBeInTheDocument();

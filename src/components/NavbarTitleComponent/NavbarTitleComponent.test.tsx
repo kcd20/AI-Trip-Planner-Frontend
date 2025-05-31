@@ -1,5 +1,4 @@
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { describe, expect, it, Mock, vi } from 'vitest';
 
@@ -9,7 +8,7 @@ import NavbarTitleComponent from './NavbarTitleComponent';
 
 import '@testing-library/jest-dom';
 
-vi.mock('../../hooks/useNavbarComponentLogic', () => ({
+vi.mock('../../hooks/useNavbarComponentLogic/useNavbarComponentLogic', () => ({
   default: vi.fn(),
 }));
 
@@ -22,7 +21,7 @@ describe('NavbarTitleComponent', () => {
 
     render(<NavbarTitleComponent />, { wrapper: MemoryRouter });
 
-    await userEvent.click(screen.getByTestId('NavbarTitleComponent'));
+    fireEvent.click(screen.getByTestId('NavbarTitleComponent'));
 
     expect(mockOnClickLandingPage).toHaveBeenCalledTimes(1);
   });
