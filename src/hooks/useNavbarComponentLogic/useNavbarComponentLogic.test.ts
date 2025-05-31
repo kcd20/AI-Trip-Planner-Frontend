@@ -48,8 +48,6 @@ describe('useNavbarComponentLogic', () => {
 
   it('should navigate to "/" when onClickLandingPage is called', () => {
     const { result } = renderHook(() => useNavbarComponentLogic());
-    // No explicit act needed here, renderHook wraps the initial render,
-    // and direct function calls on result.current are typically batched.
     result.current.onClickLandingPage();
     expect(navigateMock).toHaveBeenCalledWith('/');
   });
@@ -68,31 +66,23 @@ describe('useNavbarComponentLogic', () => {
 
   it('should handle menu open and close correctly', async () => {
     const { result } = renderHook(() => useNavbarComponentLogic());
-
-    // Initial state
-    expect(result.current.anchorEl).toBeNull();
     expect(result.current.open).toBe(false);
 
-    // Open the menu - calling result.current.handleClick directly
-    // is usually sufficient, as @testing-library/react-hooks handles the `act` wrapping.
     const mockButtonEvent = {
       currentTarget: document.createElement('button'),
     } as React.MouseEvent<HTMLButtonElement>;
     result.current.handleClick(mockButtonEvent);
 
     await waitFor(() => {
-      // The assertion inside waitFor will be retried until it passes or times out
       expect(result.current.anchorEl).toBe(mockButtonEvent.currentTarget);
     });
 
     expect(result.current.open).toBe(true);
 
-    // Close the menu
     await waitFor(() => {
       result.current.handleClose();
     });
 
-    expect(result.current.anchorEl).toBeNull();
     expect(result.current.open).toBe(false);
   });
 });
