@@ -4,7 +4,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { CSSProperties, FC } from 'react';
 
 import ArrivalAirportField from '../../fields/ArrivalAirportField/ArrivalAirportField';
-import DepartureAirportField from '../../fields/DepartureAirportField';
+import DepartureAirportField from '../../fields/DepartureAirportField/DepartureAirportField';
 import DestinationsField from '../../fields/DestinationsField';
 import LengthOfTripField from '../../fields/LengthOfTripField';
 import TimeOfArrivalField from '../../fields/TimeOfArrivalField';

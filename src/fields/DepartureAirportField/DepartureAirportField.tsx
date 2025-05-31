@@ -2,10 +2,9 @@ import { Box } from '@mui/system';
 import { useAtomValue } from 'jotai';
 import { FC } from 'react';
 
-import { AIRPORTS } from '../constants';
-import { disableActionsAtom, disableFormAtom } from '../store/atoms';
-
-import GroupSelectBase from './base/GroupSelectBase';
+import { AIRPORTS } from '../../constants';
+import { disableActionsAtom, disableFormAtom } from '../../store/atoms';
+import GroupSelectBase from '../base/GroupSelectBase';
 
 const DepartureAirportField: FC = () => {
   const disableForm = useAtomValue(disableFormAtom);
