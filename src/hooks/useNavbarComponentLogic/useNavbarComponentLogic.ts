@@ -22,6 +22,7 @@ const useNavbarComponentLogic = (): UseNavbarComponentLogicReturnInterface => {
   );
 
   const onClickLandingPage = useCallback(() => {
+    sessionStorage.removeItem('savedTrip');
     navigate('/');
   }, [navigate]);
 

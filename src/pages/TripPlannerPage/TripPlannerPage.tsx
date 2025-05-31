@@ -1,6 +1,6 @@
 import Box from '@mui/system/Box';
 import { useAtomValue } from 'jotai';
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import FormMapDisplayComponent from '../../components/FormMapDisplayComponent/FormMapDisplayComponent';
@@ -28,10 +28,6 @@ const TripPlannerPage: FC = () => {
     shouldUnregister: true,
   });
   const { reset: resetTripDetails } = tripDetailsFormMethods;
-
-  useEffect(() => {
-    sessionStorage.removeItem('savedTrip');
-  }, []);
 
   return (
     <Box>
