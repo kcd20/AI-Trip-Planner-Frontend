@@ -20,7 +20,7 @@ describe('LoginPage', () => {
     sessionStorage.clear();
   });
 
-  test('renders the SignIn component with default redirect URL when no saved trip', () => {
+  it('renders the SignIn component with default redirect URL when no saved trip', () => {
     render(<LoginPage />);
 
     const signInComponent = screen.getByTestId('mock-clerk-sign-in');
@@ -30,7 +30,7 @@ describe('LoginPage', () => {
     expect(screen.getByTestId('sign-up-url')).toHaveTextContent('/register');
   });
 
-  test('renders the SignIn component with /trips redirect URL when savedTrip exists', () => {
+  it('renders the SignIn component with /trips redirect URL when savedTrip exists', () => {
     sessionStorage.setItem('savedTrip', 'someTripId');
 
     render(<LoginPage />);

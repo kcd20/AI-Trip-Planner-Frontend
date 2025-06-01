@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { expect, test, vi } from 'vitest';
+import { expect, vi } from 'vitest';
 
 import SavedTripsPage from './SavedTripsPage';
 
@@ -9,7 +9,7 @@ vi.mock('../../components/SavedTripsComponent', () => ({
   default: vi.fn(() => <div>Mocked SavedTrips Component</div>),
 }));
 
-test('SavedTripsPage renders correctly', () => {
+it('SavedTripsPage renders correctly', () => {
   render(<SavedTripsPage />);
 
   expect(screen.getByText('Mocked SavedTrips Component')).toBeInTheDocument();

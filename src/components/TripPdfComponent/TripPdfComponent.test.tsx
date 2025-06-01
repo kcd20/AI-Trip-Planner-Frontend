@@ -46,7 +46,7 @@ describe('TripPdfComponent', () => {
     tripDetails: 'A wonderful trip exploring the culture and sights of Japan.',
   };
 
-  test('renders trip details correctly', () => {
+  it('renders trip details correctly', () => {
     // Render the TripPdfComponent with the mock data.
     render(<TripPdfComponent {...mockTripData} />);
 

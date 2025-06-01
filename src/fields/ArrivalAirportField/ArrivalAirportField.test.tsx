@@ -32,7 +32,7 @@ describe('ArrivalAirportField', () => {
 
   const mockUseAtomValue = useAtomValue as Mock;
 
-  test('renders the ArrivalAirportField component', () => {
+  it('renders the ArrivalAirportField component', () => {
     mockUseAtomValue.mockImplementation((atom) => {
       if (atom === disableFormAtom) {
         return false;
@@ -51,7 +51,7 @@ describe('ArrivalAirportField', () => {
     expect(select).toBeInTheDocument();
     expect(select).toBeEnabled();
   });
-  test('disables the select when disableFormAtom is true', () => {
+  it('disables the select when disableFormAtom is true', () => {
     mockUseAtomValue.mockImplementation((atom) => {
       if (atom === disableFormAtom) {
         return true;
@@ -68,7 +68,7 @@ describe('ArrivalAirportField', () => {
     expect(select).toBeDisabled();
   });
 
-  test('disables the select when disableActionsAtom is true', () => {
+  it('disables the select when disableActionsAtom is true', () => {
     mockUseAtomValue.mockImplementation((atom) => {
       if (atom === disableFormAtom) {
         return false;
@@ -85,7 +85,7 @@ describe('ArrivalAirportField', () => {
     expect(select).toBeDisabled();
   });
 
-  test('enables the select when both atoms are false', () => {
+  it('enables the select when both atoms are false', () => {
     mockUseAtomValue.mockImplementation((atom) => {
       if (atom === disableFormAtom) {
         return false;
