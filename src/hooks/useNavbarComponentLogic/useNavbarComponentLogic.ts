@@ -1,5 +1,8 @@
+import { useSetAtom } from 'jotai';
 import { useCallback, useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+
+import { disableFormAtom, tripDetailsAtom } from '../../store/atoms';
 
 interface UseNavbarComponentLogicReturnInterface {
   isOnLoginOrRegisterPage: boolean;
@@ -15,6 +18,8 @@ interface UseNavbarComponentLogicReturnInterface {
 const useNavbarComponentLogic = (): UseNavbarComponentLogicReturnInterface => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const setTripDetails = useSetAtom(tripDetailsAtom);
+  const setDisableForm = useSetAtom(disableFormAtom);
 
   const isOnLoginOrRegisterPage = useMemo(
     () => pathname === '/login' || pathname === '/register',
@@ -23,8 +28,10 @@ const useNavbarComponentLogic = (): UseNavbarComponentLogicReturnInterface => {
 
   const onClickLandingPage = useCallback(() => {
     sessionStorage.removeItem('savedTrip');
+    setDisableForm(false);
+    setTripDetails('');
     navigate('/');
-  }, [navigate]);
+  }, [navigate, setDisableForm, setTripDetails]);
 
   const onClickSavedTrips = useCallback(() => {
     navigate('/trips');
