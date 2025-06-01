@@ -29,7 +29,7 @@ describe('NavbarTitleComponent', () => {
     expect(titleElement).toBeInTheDocument();
   });
 
-  it('calls onClickLandingPage when the title is clicked', async () => {
+  it('calls onClickLandingPage when the title component is clicked', async () => {
     render(<NavbarTitleComponent />);
 
     fireEvent.click(screen.getByTestId('NavbarTitleComponent'));
