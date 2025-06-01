@@ -4,11 +4,10 @@ import { useAtomValue } from 'jotai';
 import { CSSProperties, FC } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { PREFECTURES } from '../constants';
-import { disableActionsAtom, disableFormAtom } from '../store/atoms';
-import TravelFormInterface from '../types/TravelFormInterface';
-
-import MultiAutoCompleteBase from './base/MultiAutoCompleteBase';
+import { PREFECTURES } from '../../constants';
+import { disableActionsAtom, disableFormAtom } from '../../store/atoms';
+import TravelFormInterface from '../../types/TravelFormInterface';
+import MultiAutoCompleteBase from '../base/MultiAutoCompleteBase';
 
 const classes = {
   error: {

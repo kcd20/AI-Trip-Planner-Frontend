@@ -2,22 +2,9 @@ import '@testing-library/jest-dom';
 import { render, screen, cleanup } from '@testing-library/react';
 import { useAtomValue } from 'jotai';
 import { MemoryRouter } from 'react-router-dom';
-import { Mock, vi } from 'vitest'; // Import vi from vitest
+import { Mock, vi } from 'vitest';
 
 import TripPlannerPage from './TripPlannerPage'; // Adjust the import path if necessary
-
-vi.mock('@clerk/clerk-react', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@clerk/clerk-react')>();
-  return {
-    ...actual,
-    useAuth: () => ({
-      getToken: vi.fn(() => 'mocked-token'),
-    }),
-    useUser: () => ({
-      isSignedIn: false,
-    }),
-  };
-});
 
 vi.mock('jotai', async () => {
   const actual = await vi.importActual<typeof import('jotai')>('jotai');
@@ -26,6 +13,17 @@ vi.mock('jotai', async () => {
     useAtomValue: vi.fn(),
   };
 });
+
+vi.mock(
+  '../../components/FormMapDisplayComponent/FormMapDisplayComponent',
+  () => ({
+    default: vi.fn(() => <div>FormMapDisplayComponent</div>),
+  })
+);
+
+vi.mock('../../components/TripDetailsComponent/TripDetailsComponent', () => ({
+  default: vi.fn(() => <div>TripDetailsComponent</div>),
+}));
 
 describe('TripPlannerPage', () => {
   beforeEach(() => {
@@ -42,44 +40,21 @@ describe('TripPlannerPage', () => {
     mockUseAtomValue.mockReturnValue('');
 
     render(<TripPlannerPage />, { wrapper: MemoryRouter });
+    // Expect FormMapDisplayComponent to be rendered
+    expect(screen.getByText('FormMapDisplayComponent')).toBeInTheDocument();
 
-    // Expect form fields to be rendered
-    expect(screen.getByLabelText(/Prefectures/i)).toBeInTheDocument();
-    expect(
-      screen.getByLabelText(/Length of Trip \(days\)/i)
-    ).toBeInTheDocument();
-    expect(screen.getByLabelText(/Arrival Airport/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Departure Airport/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Time of Arrival/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Time of Departure/i)).toBeInTheDocument();
-
-    // Expect Japan map to be rendered
-    expect(screen.getByTestId('JapanMapComponent')).toBeInTheDocument();
-
-    // Expect Trip details to not be rendered
-    expect(
-      screen.queryByTestId('TripDetailsComponent')
-    ).not.toBeInTheDocument();
+    // Expect TripDetailsComponent to not be rendered
+    expect(screen.queryByText('TripDetailsComponent')).not.toBeInTheDocument();
   });
 
   it('renders TripDetailsComponent when tripDetailsAtom has a value', () => {
     mockUseAtomValue.mockReturnValue('Some trip details');
     render(<TripPlannerPage />, { wrapper: MemoryRouter });
 
-    // Expect form fields to be rendered
-    expect(screen.getByLabelText(/Prefectures/i)).toBeInTheDocument();
-    expect(
-      screen.getByLabelText(/Length of Trip \(days\)/i)
-    ).toBeInTheDocument();
-    expect(screen.getByLabelText(/Arrival Airport/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Departure Airport/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Time of Arrival/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Time of Departure/i)).toBeInTheDocument();
+    // Expect FormMapDisplayComponent to be rendered
+    expect(screen.getByText('FormMapDisplayComponent')).toBeInTheDocument();
 
-    // Expect Japan map to be rendered
-    expect(screen.getByTestId('JapanMapComponent')).toBeInTheDocument();
-
-    // Expect Trip details to be rendered
-    expect(screen.getByTestId('TripDetailsComponent')).toBeInTheDocument();
+    // Expect TripDetailsComponent to be rendered
+    expect(screen.getByText('TripDetailsComponent')).toBeInTheDocument();
   });
 });

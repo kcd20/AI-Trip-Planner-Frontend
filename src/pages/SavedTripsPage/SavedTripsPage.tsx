@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
 import { CSSProperties, FC } from 'react';
 
-import SavedTripsComponent from '../../components/SavedTripsComponent';
+import SavedTripsComponent from '../../components/SavedTripsComponent/SavedTripsComponent';
 
 const classes = {
   root: {

@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import TextAreaBase from './base/TextAreaBase';
+import TextAreaBase from '../base/TextAreaBase';
 
 const TripDetailsField: FC = () => {
   return (

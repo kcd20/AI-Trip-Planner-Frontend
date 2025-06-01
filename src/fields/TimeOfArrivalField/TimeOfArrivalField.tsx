@@ -2,9 +2,9 @@ import { Box } from '@mui/material';
 import { useAtomValue } from 'jotai';
 import { FC } from 'react';
 
-import { disableActionsAtom, disableFormAtom } from '../store/atoms';
+import { disableActionsAtom, disableFormAtom } from '../../store/atoms';
 
-import TimePickerBase from './base/TimePickerBase';
+import TimePickerBase from '../base/TimePickerBase';
 
 const TimeOfArrivalField: FC = () => {
   const disableForm = useAtomValue(disableFormAtom);

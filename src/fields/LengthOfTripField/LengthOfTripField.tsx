@@ -4,10 +4,9 @@ import { useAtomValue } from 'jotai';
 import { CSSProperties, FC } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { disableActionsAtom, disableFormAtom } from '../store/atoms';
-import TravelFormInterface from '../types/TravelFormInterface';
-
-import TextFieldBase from './base/TextFieldBase';
+import { disableActionsAtom, disableFormAtom } from '../../store/atoms';
+import TravelFormInterface from '../../types/TravelFormInterface';
+import TextFieldBase from '../base/TextFieldBase';
 
 const classes = {
   error: {

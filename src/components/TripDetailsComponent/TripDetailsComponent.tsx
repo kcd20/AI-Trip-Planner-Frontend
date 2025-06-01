@@ -4,7 +4,7 @@ import { CSSProperties, FC } from 'react';
 import { UseFormGetValues } from 'react-hook-form';
 
 import theme from '../../config/theme';
-import TripDetailsField from '../../fields/TripDetailsField';
+import TripDetailsField from '../../fields/TripDetailsField/TripDetailsField';
 import useTripDetailsComponentLogic from '../../hooks/useTripDetailsComponentLogic/useTripDetailsComponentLogic';
 import TravelFormInterface from '../../types/TravelFormInterface';
 import ButtonComponent from '../common/ButtonComponent/ButtonComponent';
@@ -32,31 +32,22 @@ const TripDetailsComponent: FC<TripDetailsComponentProps> = ({
     useTripDetailsComponentLogic({
       getMainFormValues,
     });
+
   return (
     <Box data-testid="TripDetailsComponent" sx={classes.root}>
       <Box ref={tripDetailsRef}>
         <TripDetailsField />
       </Box>
-      {isSignedIn && (
-        <Box sx={classes.buttonWrapper}>
-          <ButtonComponent
-            text="Save Trip Details"
-            type="submit"
-            variant="contained"
-            onClick={saveTrip}
-          />
-        </Box>
-      )}
-      {!isSignedIn && (
-        <Box sx={classes.buttonWrapper}>
-          <ButtonComponent
-            text="Log In to Save Trip Details"
-            type="submit"
-            variant="contained"
-            onClick={loginAndSave}
-          />
-        </Box>
-      )}
+      <Box sx={classes.buttonWrapper}>
+        <ButtonComponent
+          text={
+            isSignedIn ? 'Save Trip Details' : 'Log In to Save Trip Details'
+          }
+          type="submit"
+          variant="contained"
+          onClick={isSignedIn ? saveTrip : loginAndSave}
+        />
+      </Box>
     </Box>
   );
 };

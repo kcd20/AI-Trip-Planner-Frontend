@@ -5,7 +5,7 @@ import SavedTripsPage from './SavedTripsPage';
 
 import '@testing-library/jest-dom';
 
-vi.mock('../../components/SavedTripsComponent', () => ({
+vi.mock('../../components/SavedTripsComponent/SavedTripsComponent', () => ({
   default: vi.fn(() => <div>Mocked SavedTrips Component</div>),
 }));
 
