@@ -21,14 +21,14 @@ const classes = {
 } as const;
 
 const NavbarComponent: FC = () => {
-  const { isOnLoginOrRegisterPage } = useNavbarComponentLogic();
+  const { isSignedIn, isOnLoginOrRegisterPage } = useNavbarComponentLogic();
   return (
     <AppBar position="static">
       <Toolbar sx={classes.toolbar}>
         <NavbarTitleComponent />
 
         <Box sx={classes.rightContent}>
-          <NavbarSavedTripsComponent />
+          {isSignedIn && <NavbarSavedTripsComponent />}
           {!isOnLoginOrRegisterPage && <NavbarLoginComponent />}
         </Box>
       </Toolbar>

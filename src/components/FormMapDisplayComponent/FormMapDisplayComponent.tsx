@@ -59,7 +59,7 @@ const FormMapDisplayComponent: FC<FormMapDisplayComponentProps> = ({
   });
 
   return (
-    <Box data-testid="FormMapDisplayComponent" sx={classes.root}>
+    <Box sx={classes.root}>
       <Box sx={classes.form}>
         <form
           noValidate

@@ -1,4 +1,3 @@
-import { useUser } from '@clerk/clerk-react';
 import Box from '@mui/material/Box';
 import { CSSProperties, FC } from 'react';
 import { UseFormGetValues } from 'react-hook-form';
@@ -27,8 +26,7 @@ interface TripDetailsComponentProps {
 const TripDetailsComponent: FC<TripDetailsComponentProps> = ({
   getMainFormValues,
 }) => {
-  const { isSignedIn } = useUser();
-  const { tripDetailsRef, saveTrip, loginAndSave } =
+  const { isSignedIn, tripDetailsRef, saveTrip, loginAndSave } =
     useTripDetailsComponentLogic({
       getMainFormValues,
     });

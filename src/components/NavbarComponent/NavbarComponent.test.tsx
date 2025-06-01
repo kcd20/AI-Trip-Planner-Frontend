@@ -7,17 +7,15 @@ import NavbarComponent from './NavbarComponent';
 import '@testing-library/jest-dom';
 
 vi.mock('../NavbarLoginComponent/NavbarLoginComponent', () => ({
-  default: () => <div data-testid="NavbarLoginComponent">Login Component</div>,
+  default: () => <div>NavbarLoginComponent</div>,
 }));
 
 vi.mock('../NavbarSavedTripsComponent/NavbarSavedTripsComponent', () => ({
-  default: () => (
-    <div data-testid="NavbarSavedTripsComponent">Saved Trips Component</div>
-  ),
+  default: () => <div>NavbarSavedTripsComponent</div>,
 }));
 
 vi.mock('../NavbarTitleComponent/NavbarTitleComponent', () => ({
-  default: () => <div data-testid="NavbarTitleComponent">Title Component</div>,
+  default: () => <div>NavbarTitleComponent</div>,
 }));
 
 const mockUseNavbarComponentLogic = vi.fn();
@@ -30,29 +28,46 @@ describe('NavbarComponent', () => {
     vi.clearAllMocks();
   });
 
-  it('renders NavbarLoginComponent when isOnLoginOrRegisterPage is false', () => {
+  it('renders NavbarSavedTripsComponent but not NavbarLoginComponent', () => {
     mockUseNavbarComponentLogic.mockReturnValue({
+      isSignedIn: true,
       isOnLoginOrRegisterPage: false,
     });
 
     render(<NavbarComponent />, { wrapper: MemoryRouter });
 
-    expect(screen.getByTestId('NavbarTitleComponent')).toBeInTheDocument();
-    expect(screen.getByTestId('NavbarSavedTripsComponent')).toBeInTheDocument();
-    expect(screen.getByTestId('NavbarLoginComponent')).toBeInTheDocument();
+    expect(screen.getByText('NavbarTitleComponent')).toBeInTheDocument();
+    expect(screen.getByText('NavbarSavedTripsComponent')).toBeInTheDocument();
+    expect(screen.getByText('NavbarLoginComponent')).toBeInTheDocument();
   });
 
-  it('does not render NavbarLoginComponent when isOnLoginOrRegisterPage is true', () => {
+  it('does not render NavbarSavedTripsComponent and NavbarLoginComponent', () => {
     mockUseNavbarComponentLogic.mockReturnValue({
+      isSignedIn: false,
       isOnLoginOrRegisterPage: true,
     });
 
     render(<NavbarComponent />, { wrapper: MemoryRouter });
 
-    expect(screen.getByTestId('NavbarTitleComponent')).toBeInTheDocument();
-    expect(screen.getByTestId('NavbarSavedTripsComponent')).toBeInTheDocument();
+    expect(screen.getByText('NavbarTitleComponent')).toBeInTheDocument();
     expect(
-      screen.queryByTestId('NavbarLoginComponent')
+      screen.queryByText('NavbarSavedTripsComponent')
     ).not.toBeInTheDocument();
+    expect(screen.queryByText('NavbarLoginComponent')).not.toBeInTheDocument();
+  });
+
+  it('renders NavbarLoginComponent but not NavbarSavedTripsComponent', () => {
+    mockUseNavbarComponentLogic.mockReturnValue({
+      isSignedIn: false,
+      isOnLoginOrRegisterPage: false,
+    });
+
+    render(<NavbarComponent />, { wrapper: MemoryRouter });
+
+    expect(screen.getByText('NavbarTitleComponent')).toBeInTheDocument();
+    expect(
+      screen.queryByText('NavbarSavedTripsComponent')
+    ).not.toBeInTheDocument();
+    expect(screen.getByText('NavbarLoginComponent')).toBeInTheDocument();
   });
 });

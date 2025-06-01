@@ -1,15 +1,13 @@
-import { SignedIn, SignedOut, useClerk, UserButton } from '@clerk/clerk-react';
+import { UserButton } from '@clerk/clerk-react';
 import MenuIcon from '@mui/icons-material/Menu';
 import { IconButton, Menu, MenuItem } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { useAtomValue } from 'jotai';
 import { CSSProperties, FC } from 'react';
 
 import theme from '../../config/theme';
-import useNavbarComponentLogic from '../../hooks/useNavbarComponentLogic/useNavbarComponentLogic';
-import { disableActionsAtom } from '../../store/atoms';
+import useNavbarLoginComponentLogic from '../../hooks/useNavbarLoginComponentLogic/useNavbarLoginComponentLogic';
 
 const classes = {
   buttonText: { textTransform: 'none' } as CSSProperties,
@@ -37,13 +35,17 @@ const NavbarLoginComponent: FC = () => {
     open,
     handleClick,
     handleClose,
-  } = useNavbarComponentLogic();
-  const { signOut } = useClerk();
-  const disabled = useAtomValue(disableActionsAtom);
+    signOut,
+    disabled,
+    isSignedIn,
+  } = useNavbarLoginComponentLogic();
+
   return (
     <Box data-testid="NavbarLoginComponent">
       <Box sx={classes.login}>
-        <SignedOut>
+        {isSignedIn ? (
+          <UserButton />
+        ) : (
           <Button
             color="inherit"
             disabled={disabled}
@@ -54,10 +56,7 @@ const NavbarLoginComponent: FC = () => {
               Login / Register
             </Typography>
           </Button>
-        </SignedOut>
-        <SignedIn>
-          <UserButton />
-        </SignedIn>
+        )}
       </Box>
       <Box sx={classes.loginMobile}>
         <IconButton
@@ -76,7 +75,34 @@ const NavbarLoginComponent: FC = () => {
           open={open}
           onClose={handleClose}
         >
-          <SignedOut>
+          {isSignedIn ? (
+            <>
+              <MenuItem
+                onClick={() => {
+                  onClickSavedTrips();
+                  handleClose();
+                }}
+              >
+                <Typography
+                  sx={classes.menuText}
+                  variant="h6"
+                  onClick={onClickSavedTrips}
+                >
+                  Saved Trips
+                </Typography>
+              </MenuItem>
+              <hr />
+              <MenuItem onClick={() => signOut()}>
+                <Typography
+                  sx={classes.menuText}
+                  variant="h6"
+                  onClick={onClickSavedTrips}
+                >
+                  Sign Out
+                </Typography>
+              </MenuItem>
+            </>
+          ) : (
             <MenuItem
               onClick={() => {
                 onClickLogin();
@@ -85,33 +111,7 @@ const NavbarLoginComponent: FC = () => {
             >
               Login / Register
             </MenuItem>
-          </SignedOut>
-          <SignedIn>
-            <MenuItem
-              onClick={() => {
-                onClickSavedTrips();
-                handleClose();
-              }}
-            >
-              <Typography
-                sx={classes.menuText}
-                variant="h6"
-                onClick={onClickSavedTrips}
-              >
-                Saved Trips
-              </Typography>
-            </MenuItem>
-            <hr />
-            <MenuItem onClick={() => signOut()}>
-              <Typography
-                sx={classes.menuText}
-                variant="h6"
-                onClick={onClickSavedTrips}
-              >
-                Sign Out
-              </Typography>
-            </MenuItem>
-          </SignedIn>
+          )}
         </Menu>
       </Box>
     </Box>

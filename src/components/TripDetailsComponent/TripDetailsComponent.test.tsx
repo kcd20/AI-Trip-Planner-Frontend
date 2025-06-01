@@ -5,16 +5,12 @@ import { vi } from 'vitest';
 
 import TripDetailsComponent from './TripDetailsComponent';
 
-const mockIsSignedIn = vi.fn();
 vi.mock('@clerk/clerk-react', async (importOriginal) => {
   const actual = await importOriginal<typeof import('@clerk/clerk-react')>();
   return {
     ...actual,
     useAuth: () => ({
       getToken: vi.fn(() => 'mocked-token'),
-    }),
-    useUser: () => ({
-      isSignedIn: mockIsSignedIn(),
     }),
   };
 });
@@ -23,10 +19,12 @@ vi.mock('../../fields/TripDetailsField/TripDetailsField', () => ({
   default: vi.fn(() => <div>TripDetailsField</div>),
 }));
 
+const mockIsSignedIn = vi.fn();
 vi.mock(
   '../../hooks/useTripDetailsComponentLogic/useTripDetailsComponentLogic',
   () => ({
     default: () => ({
+      isSignedIn: mockIsSignedIn(),
       tripDetailsRef: vi.fn(),
       saveTrip: vi.fn(),
       loginAndSave: vi.fn(),

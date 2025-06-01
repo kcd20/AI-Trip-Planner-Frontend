@@ -1,31 +1,34 @@
 import { renderHook } from '@testing-library/react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { describe, it, expect, vi, beforeEach, afterEach, Mock } from 'vitest';
+import { useLocation } from 'react-router-dom';
+import { describe, it, expect, vi, Mock } from 'vitest';
 
 import useNavbarComponentLogic from './useNavbarComponentLogic';
 
-// Mock react-router-dom using Vitest's vi.mock
-vi.mock('react-router-dom', () => ({
-  useLocation: vi.fn(),
-  useNavigate: vi.fn(),
-}));
+vi.mock('react-router-dom', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('react-router-dom')>();
+  return {
+    ...actual,
+    useLocation: vi.fn(),
+  };
+});
+
+vi.mock('@clerk/clerk-react', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@clerk/clerk-react')>();
+  return {
+    ...actual,
+    useUser: () => ({
+      isSignedIn: false,
+    }),
+  };
+});
 
 describe('useNavbarComponentLogic', () => {
-  // Cast the mocked functions for better type inference if needed
-  const mockUseNavigate = useNavigate as Mock;
   const mockUseLocation = useLocation as Mock;
-  let navigateMock: Mock;
 
-  beforeEach(() => {
-    // Reset mocks before each test
-    navigateMock = vi.fn();
-    mockUseNavigate.mockReturnValue(navigateMock);
-    mockUseLocation.mockReturnValue({ pathname: '/' }); // Default pathname
-  });
-
-  afterEach(() => {
-    // Clear all mocks after each test
-    vi.clearAllMocks();
+  it('should return false for isSignedIn when user is not signed in', () => {
+    mockUseLocation.mockReturnValue({ pathname: '/' });
+    const { result } = renderHook(() => useNavbarComponentLogic());
+    expect(result.current.isSignedIn).toBe(false);
   });
 
   it('should return isOnLoginOrRegisterPage as true when on /login', () => {
@@ -40,27 +43,9 @@ describe('useNavbarComponentLogic', () => {
     expect(result.current.isOnLoginOrRegisterPage).toBe(true);
   });
 
-  it('should return isOnLoginOrRegisterPage as false when not on login or register page', () => {
-    mockUseLocation.mockReturnValue({ pathname: '/some-other-page' });
+  it('should return isOnLoginOrRegisterPage as false when on /trips', () => {
+    mockUseLocation.mockReturnValue({ pathname: '/trips' });
     const { result } = renderHook(() => useNavbarComponentLogic());
     expect(result.current.isOnLoginOrRegisterPage).toBe(false);
-  });
-
-  it('should navigate to "/" when onClickLandingPage is called', () => {
-    const { result } = renderHook(() => useNavbarComponentLogic());
-    result.current.onClickLandingPage();
-    expect(navigateMock).toHaveBeenCalledWith('/');
-  });
-
-  it('should navigate to "/trips" when onClickSavedTrips is called', () => {
-    const { result } = renderHook(() => useNavbarComponentLogic());
-    result.current.onClickSavedTrips();
-    expect(navigateMock).toHaveBeenCalledWith('/trips');
-  });
-
-  it('should navigate to "/login" when onClickLogin is called', () => {
-    const { result } = renderHook(() => useNavbarComponentLogic());
-    result.current.onClickLogin();
-    expect(navigateMock).toHaveBeenCalledWith('/login');
   });
 });

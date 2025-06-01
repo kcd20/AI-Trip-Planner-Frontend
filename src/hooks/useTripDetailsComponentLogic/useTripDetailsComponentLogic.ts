@@ -1,4 +1,4 @@
-import { useAuth } from '@clerk/clerk-react';
+import { useAuth, useUser } from '@clerk/clerk-react';
 import dayjs from 'dayjs';
 import { useAtomValue } from 'jotai';
 import { RefObject, useEffect, useRef } from 'react';
@@ -14,6 +14,7 @@ interface UseTripPlannerPageLogicParamsInterface {
   getMainFormValues: UseFormGetValues<TravelFormInterface>;
 }
 interface UseTripPlannerPageLogicReturnInterface {
+  isSignedIn: boolean;
   saveTrip: () => Promise<void>;
   tripDetailsRef: RefObject<HTMLDivElement | null>;
   loginAndSave: () => void;
@@ -24,6 +25,7 @@ const useTripDetailsComponentLogic = ({
 }: UseTripPlannerPageLogicParamsInterface): UseTripPlannerPageLogicReturnInterface => {
   const { getToken } = useAuth();
   const navigate = useNavigate();
+  const { isSignedIn } = useUser();
   const tripDetailsRef = useRef<HTMLDivElement>(null);
 
   const tripDetails = useAtomValue(tripDetailsAtom);
@@ -119,6 +121,7 @@ const useTripDetailsComponentLogic = ({
   }, [tripDetails]);
 
   return {
+    isSignedIn: isSignedIn ?? false,
     saveTrip,
     tripDetailsRef,
     loginAndSave,

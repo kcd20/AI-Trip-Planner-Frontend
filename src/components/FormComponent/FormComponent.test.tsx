@@ -1,49 +1,40 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
-import { FormProvider, useForm } from 'react-hook-form';
 import { describe, it, expect, vi } from 'vitest';
 
 import FormComponent from './FormComponent';
 
-vi.mock('./DestinationsField', () => ({
-  default: () => <div data-testid="DestinationsField" />,
+vi.mock('../../fields/DestinationsField/DestinationsField', () => ({
+  default: () => <div>DestinationsField</div>,
 }));
-vi.mock('./LengthOfTripField', () => ({
-  default: () => <div data-testid="LengthOfTripField" />,
+vi.mock('../../fields/LengthOfTripField/LengthOfTripField', () => ({
+  default: () => <div>LengthOfTripField</div>,
 }));
-vi.mock('./ArrivalAirportField', () => ({
-  default: () => <div data-testid="ArrivalAirportField" />,
+vi.mock('../../fields/ArrivalAirportField/ArrivalAirportField', () => ({
+  default: () => <div>ArrivalAirportField</div>,
 }));
-vi.mock('./DepartureAirportField', () => ({
-  default: () => <div data-testid="DepartureAirportField" />,
+vi.mock('../../fields/DepartureAirportField/DepartureAirportField', () => ({
+  default: () => <div>DepartureAirportField</div>,
 }));
-vi.mock('./TimeOfArrivalField', () => ({
-  default: () => <div data-testid="TimeOfArrivalField" />,
+vi.mock('../../fields/TimeOfArrivalField/TimeOfArrivalField', () => ({
+  default: () => <div>TimeOfArrivalField</div>,
 }));
-vi.mock('./TimeOfDepartureField', () => ({
-  default: () => <div data-testid="TimeOfDepartureField" />,
+vi.mock('../../fields/TimeOfDepartureField/TimeOfDepartureField', () => ({
+  default: () => <div>TimeOfDepartureField</div>,
 }));
 
 describe('MyComponent', () => {
-  const Wrapper = () => {
-    const methods = useForm();
-    return (
-      <FormProvider {...methods}>
-        <FormComponent />
-      </FormProvider>
-    );
-  };
   it('renders all fields correctly', () => {
-    render(<Wrapper />);
+    render(<FormComponent />);
 
     // Mandatory fields
-    expect(screen.getByTestId('destinationsField')).toBeInTheDocument();
-    expect(screen.getByTestId('lengthOfTripField')).toBeInTheDocument();
+    expect(screen.getByText('DestinationsField')).toBeInTheDocument();
+    expect(screen.getByText('LengthOfTripField')).toBeInTheDocument();
 
     // Optional fields
-    expect(screen.getByTestId('ArrivalAirportField')).toBeInTheDocument();
-    expect(screen.getByTestId('departureAirportField')).toBeInTheDocument();
-    expect(screen.getByTestId('timeOfArrivalField')).toBeInTheDocument();
-    expect(screen.getByTestId('timeOfDepartureField')).toBeInTheDocument();
+    expect(screen.getByText('ArrivalAirportField')).toBeInTheDocument();
+    expect(screen.getByText('DepartureAirportField')).toBeInTheDocument();
+    expect(screen.getByText('TimeOfArrivalField')).toBeInTheDocument();
+    expect(screen.getByText('TimeOfDepartureField')).toBeInTheDocument();
   });
 });

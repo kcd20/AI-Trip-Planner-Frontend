@@ -1,11 +1,10 @@
-import { SignedIn } from '@clerk/clerk-react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { CSSProperties, FC } from 'react';
 
 import theme from '../../config/theme';
-import useNavbarComponentLogic from '../../hooks/useNavbarComponentLogic/useNavbarComponentLogic';
+import useNavbarSavedTripsComponentLogic from '../../hooks/useNavbarSavedTripsComponentLogic/useNavbarSavedTripsComponentLogic';
 
 const classes = {
   root: {
@@ -18,16 +17,14 @@ const classes = {
 } as const;
 
 const NavbarSavedTripsComponent: FC = () => {
-  const { onClickSavedTrips } = useNavbarComponentLogic();
+  const { disabled, onClickSavedTrips } = useNavbarSavedTripsComponentLogic();
   return (
     <Box data-testid="NavbarSavedTripsComponent" sx={classes.root}>
-      <SignedIn>
-        <Button color="inherit" sx={classes.button}>
-          <Typography component="div" variant="h6" onClick={onClickSavedTrips}>
-            Saved Trips
-          </Typography>
-        </Button>
-      </SignedIn>
+      <Button color="inherit" disabled={disabled} sx={classes.button}>
+        <Typography variant="h6" onClick={onClickSavedTrips}>
+          Saved Trips
+        </Typography>
+      </Button>
     </Box>
   );
 };
