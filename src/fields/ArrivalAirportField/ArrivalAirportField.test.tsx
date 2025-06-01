@@ -44,7 +44,7 @@ describe('ArrivalAirportField', () => {
     });
     render(<Wrapper />);
 
-    const group = screen.getByTestId('arrivalAirportField');
+    const group = screen.getByTestId('ArrivalAirportField');
     expect(group).toBeInTheDocument();
 
     const select = screen.getByLabelText(/Arrival Airport/i);

@@ -33,7 +33,7 @@ const TripDetailsComponent: FC<TripDetailsComponentProps> = ({
       getMainFormValues,
     });
   return (
-    <Box sx={classes.root}>
+    <Box data-testid="TripDetailsComponent" sx={classes.root}>
       <Box ref={tripDetailsRef}>
         <TripDetailsField />
       </Box>

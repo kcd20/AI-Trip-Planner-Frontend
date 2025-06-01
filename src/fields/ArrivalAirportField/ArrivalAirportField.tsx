@@ -10,9 +10,9 @@ const ArrivalAirportField: FC = () => {
   const disableForm = useAtomValue(disableFormAtom);
   const isActionOnGoing = useAtomValue(disableActionsAtom);
   return (
-    <Box data-testid="arrivalAirportField">
+    <Box data-testid="ArrivalAirportField">
       <GroupSelectBase
-        data-testid="arrivalAirportField"
+        data-testid="ArrivalAirportField"
         disabled={disableForm || isActionOnGoing}
         fieldName="arrivalAirport"
         label="Arrival Airport"

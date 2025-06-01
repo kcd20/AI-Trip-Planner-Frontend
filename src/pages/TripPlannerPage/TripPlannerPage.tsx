@@ -31,16 +31,14 @@ const TripPlannerPage: FC = () => {
 
   return (
     <Box>
-      <Box>
-        <FormProvider {...mainFormMethods}>
-          <FormMapDisplayComponent
-            getMainFormValues={getMainFormValues}
-            handleSubmit={handleSubmit}
-            resetMainForm={resetMainForm}
-            resetTripDetails={resetTripDetails}
-          />
-        </FormProvider>
-      </Box>
+      <FormProvider {...mainFormMethods}>
+        <FormMapDisplayComponent
+          getMainFormValues={getMainFormValues}
+          handleSubmit={handleSubmit}
+          resetMainForm={resetMainForm}
+          resetTripDetails={resetTripDetails}
+        />
+      </FormProvider>
       <FormProvider {...tripDetailsFormMethods}>
         {tripDetails && (
           <TripDetailsComponent getMainFormValues={getMainFormValues} />

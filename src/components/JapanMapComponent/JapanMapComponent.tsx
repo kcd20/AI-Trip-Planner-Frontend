@@ -20,7 +20,7 @@ const JapanMapComponent: FC = () => {
   const currentSelectedPrefectures = useWatch({ name: 'destinations' });
 
   return (
-    <Box data-testid="japanMapComponent" sx={classes.root}>
+    <Box data-testid="JapanMapComponent" sx={classes.root}>
       <svg
         baseProfile="tiny"
         fill="#d9d9d9"

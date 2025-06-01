@@ -10,9 +10,9 @@ vi.mock('react-hook-form', () => ({
 }));
 
 describe('JapanMapComponent', () => {
-  it('renders all fields correctly', () => {
+  it('renders the map component', () => {
     render(<JapanMapComponent />);
 
-    expect(screen.getByTestId('japanMapComponent')).toBeInTheDocument();
+    expect(screen.getByTestId('JapanMapComponent')).toBeInTheDocument();
   });
 });

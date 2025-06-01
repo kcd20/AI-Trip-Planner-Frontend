@@ -41,7 +41,7 @@ describe('MyComponent', () => {
     expect(screen.getByTestId('lengthOfTripField')).toBeInTheDocument();
 
     // Optional fields
-    expect(screen.getByTestId('arrivalAirportField')).toBeInTheDocument();
+    expect(screen.getByTestId('ArrivalAirportField')).toBeInTheDocument();
     expect(screen.getByTestId('departureAirportField')).toBeInTheDocument();
     expect(screen.getByTestId('timeOfArrivalField')).toBeInTheDocument();
     expect(screen.getByTestId('timeOfDepartureField')).toBeInTheDocument();
