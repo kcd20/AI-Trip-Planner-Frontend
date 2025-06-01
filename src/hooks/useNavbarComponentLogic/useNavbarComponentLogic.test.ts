@@ -9,6 +9,7 @@ vi.mock('react-router-dom', async (importOriginal) => {
   return {
     ...actual,
     useLocation: vi.fn(),
+    useNavigate: vi.fn(),
   };
 });
 

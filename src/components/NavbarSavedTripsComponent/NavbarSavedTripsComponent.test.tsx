@@ -15,10 +15,6 @@ vi.mock(
   })
 );
 
-vi.mock('@clerk/clerk-react', () => ({
-  SignedIn: ({ children }: { children: React.ReactNode }) => children,
-}));
-
 describe('NavbarSavedTripsComponent', () => {
   beforeEach(() => {
     mockOnClickSavedTrips.mockClear();
