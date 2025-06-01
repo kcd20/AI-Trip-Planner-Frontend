@@ -24,7 +24,7 @@ const NavbarTitleComponent: FC = () => {
     >
       <AirplanemodeActiveIcon sx={classes.icon} />
 
-      <Typography component="div" variant="h6" onClick={onClickLandingPage}>
+      <Typography component="div" variant="h6">
         AI Japan Trip Planner
       </Typography>
     </Box>

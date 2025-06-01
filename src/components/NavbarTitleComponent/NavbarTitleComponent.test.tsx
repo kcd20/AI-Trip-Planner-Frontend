@@ -1,40 +1,39 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
-import { describe, expect, it, Mock, vi } from 'vitest';
-
-import useNavbarComponentLogic from '../../hooks/useNavbarComponentLogic/useNavbarComponentLogic'; // Adjust path if needed
+import { describe, expect, it, vi } from 'vitest';
 
 import NavbarTitleComponent from './NavbarTitleComponent';
 
 import '@testing-library/jest-dom';
 
+const mockOnClickLandingPage = vi.fn();
 vi.mock('../../hooks/useNavbarComponentLogic/useNavbarComponentLogic', () => ({
-  default: vi.fn(),
+  default: () => ({
+    onClickLandingPage: mockOnClickLandingPage(),
+  }),
 }));
 
 describe('NavbarTitleComponent', () => {
-  it('calls onClickLandingPage when the Box is clicked', async () => {
-    const mockOnClickLandingPage = vi.fn();
-    (useNavbarComponentLogic as Mock).mockReturnValue({
-      onClickLandingPage: mockOnClickLandingPage,
-    });
-
-    render(<NavbarTitleComponent />, { wrapper: MemoryRouter });
-
-    fireEvent.click(screen.getByTestId('NavbarTitleComponent'));
-
-    expect(mockOnClickLandingPage).toHaveBeenCalledTimes(1);
+  beforeEach(() => {
+    mockOnClickLandingPage.mockClear();
   });
 
   it('renders the AirplanemodeActiveIcon', () => {
-    render(<NavbarTitleComponent />, { wrapper: MemoryRouter });
+    render(<NavbarTitleComponent />);
     const iconElement = screen.getByTestId('AirplanemodeActiveIcon');
     expect(iconElement).toBeInTheDocument();
   });
 
   it('renders the correct title text', () => {
-    render(<NavbarTitleComponent />, { wrapper: MemoryRouter });
+    render(<NavbarTitleComponent />);
     const titleElement = screen.getByText('AI Japan Trip Planner');
     expect(titleElement).toBeInTheDocument();
+  });
+
+  it('calls onClickLandingPage when the title is clicked', async () => {
+    render(<NavbarTitleComponent />);
+
+    fireEvent.click(screen.getByTestId('NavbarTitleComponent'));
+
+    expect(mockOnClickLandingPage).toHaveBeenCalledTimes(1);
   });
 });
