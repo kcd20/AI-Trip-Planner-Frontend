@@ -5,20 +5,11 @@ import { vi } from 'vitest';
 import TripPdfComponent from './TripPdfComponent';
 import '@testing-library/jest-dom';
 
-// Mock the @react-pdf/renderer library
-// This is crucial because @react-pdf/renderer components do not render to the DOM.
-// We mock them to simple React components that pass through their children,
-// allowing @testing-library/react to "see" the text content.
 vi.mock('@react-pdf/renderer', () => ({
-  // Document, Page, View are mocked to simply render their children.
   Document: ({ children }: { children: React.ReactNode }) => children,
   Page: ({ children }: { children: React.ReactNode }) => children,
   View: ({ children }: { children: React.ReactNode }) => children,
-  // Text component is mocked to render its children directly.
-  // This allows `screen.getByText` to find the text content.
   Text: ({ children }: { children: React.ReactNode }) => children,
-  // StyleSheet.create is mocked to simply return the styles object,
-  // as its primary function (creating PDF-specific styles) is not relevant for DOM testing.
   StyleSheet: {
     create: (styles: any) => styles,
   },
@@ -35,7 +26,6 @@ interface MockSavedTripsInterface {
 }
 
 describe('TripPdfComponent', () => {
-  // Define mock data to be used for testing the component.
   const mockTripData: MockSavedTripsInterface = {
     destinations: ['Tokyo', 'Kyoto'],
     lengthOfTrip: '7',
@@ -47,16 +37,9 @@ describe('TripPdfComponent', () => {
   };
 
   it('renders trip details correctly', () => {
-    // Render the TripPdfComponent with the mock data.
     render(<TripPdfComponent {...mockTripData} />);
 
-    // Assert that the main title is present.
     expect(screen.getByText(/Trip/i)).toBeInTheDocument();
-
-    // Assert that each label and its corresponding value are rendered correctly.
-    // We can directly check for the text content because the `Text` component is mocked
-    // to render its children.
-
     // Prefectures
     expect(screen.getByText(/Prefectures/i)).toBeInTheDocument();
     expect(
