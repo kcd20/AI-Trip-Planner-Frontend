@@ -17,7 +17,7 @@ import {
 } from '../../store/atoms';
 import TravelFormInterface from '../../types/TravelFormInterface';
 import useLoader from '../useLoader/useLoader';
-import useSnackbar from '../useSnackbar';
+import useSnackbar from '../useSnackbar/useSnackbar';
 
 interface UseFormMapDisplayComponentLogicParamsInterface {
   getMainFormValues: UseFormGetValues<TravelFormInterface>;

@@ -1,7 +1,7 @@
 import { AlertColor } from '@mui/material';
 import { useSetAtom } from 'jotai';
 
-import { openSnackbarAtom, snackbarAtom } from '../store/atoms';
+import { openSnackbarAtom, snackbarAtom } from '../../store/atoms';
 
 const useSnackbar = (): {
   openSnackbar: ({
