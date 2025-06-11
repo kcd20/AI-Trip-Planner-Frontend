@@ -40,12 +40,10 @@ const LengthOfTripField: FC = () => {
         disabled={disableForm || isActionOnGoing}
         fieldName="lengthOfTrip"
         label="Length of Trip (days)"
-        rules={{ required: true, validate: validateTripLength }}
+        rules={{ validate: validateTripLength }}
       />
       <Typography sx={classes.error}>
-        {errors.lengthOfTrip &&
-          (errors.lengthOfTrip.message ||
-            'Please enter the length of your trip.')}
+        {errors?.lengthOfTrip?.message}
       </Typography>
     </Box>
   );

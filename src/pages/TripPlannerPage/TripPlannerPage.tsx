@@ -1,3 +1,4 @@
+import { zodResolver } from '@hookform/resolvers/zod';
 import Box from '@mui/system/Box';
 import { useAtomValue } from 'jotai';
 import { FC } from 'react';
@@ -5,17 +6,18 @@ import { FormProvider, useForm } from 'react-hook-form';
 
 import FormMapDisplayComponent from '../../components/FormMapDisplayComponent/FormMapDisplayComponent';
 import TripDetailsComponent from '../../components/TripDetailsComponent/TripDetailsComponent';
+import { TravelForm, travelFormSchema } from '../../config/formSchema';
 import { TRAVEL_FORM_DEFAULT_VALUES } from '../../constants';
 import { tripDetailsAtom } from '../../store/atoms';
-import TravelFormInterface from '../../types/TravelFormInterface';
 
 const TripPlannerPage: FC = () => {
   const tripDetails = useAtomValue(tripDetailsAtom);
 
-  const mainFormMethods = useForm<TravelFormInterface>({
+  const mainFormMethods = useForm<TravelForm>({
     mode: 'all',
     shouldUnregister: true,
     defaultValues: TRAVEL_FORM_DEFAULT_VALUES,
+    resolver: zodResolver(travelFormSchema),
   });
   const {
     getValues: getMainFormValues,

@@ -34,7 +34,7 @@ const DestinationsField: FC = () => {
         rules={{ required: true }}
       />
       <Typography sx={classes.error}>
-        {errors.destinations && 'Please select at least 1 prefecture.'}
+        {errors?.destinations?.message}
       </Typography>
     </Box>
   );
