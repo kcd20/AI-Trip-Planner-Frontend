@@ -9,6 +9,7 @@ import postSaveTrip from '../../api/postSaveTrip';
 import { TIME_DISPLAY_FORMAT } from '../../constants';
 import { tripDetailsAtom } from '../../store/atoms';
 import TravelFormInterface from '../../types/TravelFormInterface';
+import useSnackbar from '../useSnackbar/useSnackbar';
 
 interface UseTripPlannerPageLogicParamsInterface {
   getMainFormValues: UseFormGetValues<TravelFormInterface>;
@@ -26,6 +27,7 @@ const useTripDetailsComponentLogic = ({
   const { getToken } = useAuth();
   const navigate = useNavigate();
   const { isSignedIn } = useUser();
+  const { openSnackbar } = useSnackbar();
   const tripDetailsRef = useRef<HTMLDivElement>(null);
 
   const tripDetails = useAtomValue(tripDetailsAtom);
@@ -69,7 +71,10 @@ const useTripDetailsComponentLogic = ({
       );
       navigate('/trips');
     } catch (error) {
-      window.console.log(error);
+      openSnackbar({
+        severity: 'error',
+        description: 'There was an error saving your trip. Please try again.',
+      });
     }
   };
 
