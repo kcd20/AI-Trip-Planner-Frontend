@@ -1,5 +1,7 @@
 import { useAuth, useUser } from '@clerk/clerk-react';
 import dayjs from 'dayjs';
+import timezone from 'dayjs/plugin/timezone';
+import utc from 'dayjs/plugin/utc';
 import { useAtomValue } from 'jotai';
 import { RefObject, useEffect, useRef } from 'react';
 import { useFormContext, UseFormGetValues } from 'react-hook-form';
@@ -10,6 +12,9 @@ import { TIME_DISPLAY_FORMAT } from '../../constants';
 import { tripDetailsAtom } from '../../store/atoms';
 import TravelFormInterface from '../../types/TravelFormInterface';
 import useSnackbar from '../useSnackbar/useSnackbar';
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 interface UseTripPlannerPageLogicParamsInterface {
   getMainFormValues: UseFormGetValues<TravelFormInterface>;
@@ -60,10 +65,12 @@ const useTripDetailsComponentLogic = ({
           arrivalAirport: arrivalAirport ?? undefined,
           departureAirport: departureAirport ?? undefined,
           timeOfArrival: timeOfArrival
-            ? dayjs(timeOfArrival).format(TIME_DISPLAY_FORMAT)
+            ? dayjs(timeOfArrival).tz('Asia/Tokyo').format(TIME_DISPLAY_FORMAT)
             : undefined,
           timeOfDeparture: timeOfDeparture
-            ? dayjs(timeOfDeparture).format(TIME_DISPLAY_FORMAT)
+            ? dayjs(timeOfDeparture)
+                .tz('Asia/Tokyo')
+                .format(TIME_DISPLAY_FORMAT)
             : undefined,
           tripDetails: tripDetailsFormValue,
         },
