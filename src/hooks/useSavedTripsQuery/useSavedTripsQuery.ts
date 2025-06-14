@@ -1,6 +1,8 @@
 import { useAuth } from '@clerk/clerk-react';
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import dayjs from 'dayjs';
+import timezone from 'dayjs/plugin/timezone';
+import utc from 'dayjs/plugin/utc';
 
 import getSavedTrips from '../../api/getSavedTrips';
 import postSaveTrip from '../../api/postSaveTrip';
@@ -8,6 +10,9 @@ import { TIME_DISPLAY_FORMAT } from '../../constants';
 import FullTravelFormInterface from '../../types/FullTravelFormInterface';
 import SavedTripsInterface from '../../types/SavedTripsInterface';
 import useLoader from '../useLoader/useLoader';
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 const useSavedTripsQuery = (): UseQueryResult<SavedTripsInterface[], Error> => {
   const { getToken } = useAuth();
@@ -37,10 +42,14 @@ const useSavedTripsQuery = (): UseQueryResult<SavedTripsInterface[], Error> => {
               arrivalAirport: arrivalAirport ?? undefined,
               departureAirport: departureAirport ?? undefined,
               timeOfArrival: timeOfArrival
-                ? dayjs(timeOfArrival).format(TIME_DISPLAY_FORMAT)
+                ? dayjs(timeOfArrival)
+                    .tz('Asia/Tokyo')
+                    .format(TIME_DISPLAY_FORMAT)
                 : undefined,
               timeOfDeparture: timeOfDeparture
-                ? dayjs(timeOfDeparture).format(TIME_DISPLAY_FORMAT)
+                ? dayjs(timeOfDeparture)
+                    .tz('Asia/Tokyo')
+                    .format(TIME_DISPLAY_FORMAT)
                 : undefined,
               tripDetails,
             },

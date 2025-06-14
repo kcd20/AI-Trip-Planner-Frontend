@@ -106,8 +106,8 @@ describe('useSavedTripsQuery', () => {
         lengthOfTrip: 5,
         arrivalAirport: 'Narita International Airport (NRT)',
         departureAirport: 'Narita International Airport (NRT)',
-        timeOfArrival: '01:00 am',
-        timeOfDeparture: '04:00 am',
+        timeOfArrival: '02:00 am',
+        timeOfDeparture: '05:00 am',
         tripDetails: 'Some details',
       },
       'mock-token'
