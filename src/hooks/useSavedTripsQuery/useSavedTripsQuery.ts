@@ -2,13 +2,12 @@ import { useAuth } from '@clerk/clerk-react';
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 
-import getSavedTrips from '../api/getSavedTrips';
-import postSaveTrip from '../api/postSaveTrip';
-import { TIME_DISPLAY_FORMAT } from '../constants';
-import FullTravelFormInterface from '../types/FullTravelFormInterface';
-import SavedTripsInterface from '../types/SavedTripsInterface';
-
-import useLoader from './useLoader/useLoader';
+import getSavedTrips from '../../api/getSavedTrips';
+import postSaveTrip from '../../api/postSaveTrip';
+import { TIME_DISPLAY_FORMAT } from '../../constants';
+import FullTravelFormInterface from '../../types/FullTravelFormInterface';
+import SavedTripsInterface from '../../types/SavedTripsInterface';
+import useLoader from '../useLoader/useLoader';
 
 const useSavedTripsQuery = (): UseQueryResult<SavedTripsInterface[], Error> => {
   const { getToken } = useAuth();

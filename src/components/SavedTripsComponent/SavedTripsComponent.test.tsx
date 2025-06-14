@@ -5,7 +5,7 @@ import { vi } from 'vitest';
 
 import SavedTripsComponent from './SavedTripsComponent';
 
-vi.mock('../../hooks/useSavedTripsQuery', () => ({
+vi.mock('../../hooks/useSavedTripsQuery/useSavedTripsQuery', () => ({
   default: () => ({
     data: [
       {

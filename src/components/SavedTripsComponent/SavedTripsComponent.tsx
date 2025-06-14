@@ -13,7 +13,7 @@ import { Link } from 'react-router-dom';
 
 import { DATE_DISPLAY_FORMAT, DATE_TIME_DISPLAY_FORMAT } from '../../constants';
 import useSavedTripsComponentLogic from '../../hooks/useSavedTripsComponentLogic/useSavedTripsComponentLogic';
-import useSavedTripsQuery from '../../hooks/useSavedTripsQuery';
+import useSavedTripsQuery from '../../hooks/useSavedTripsQuery/useSavedTripsQuery';
 import TripPdfComponent from '../TripPdfComponent/TripPdfComponent';
 
 const TableHeaders = [
