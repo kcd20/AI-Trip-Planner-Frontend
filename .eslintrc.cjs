@@ -201,6 +201,7 @@ module.exports = {
             usePrettierrc: true,
           },
         ],
+        'react/display-name': 'off'
       },
     },
     {

@@ -16,40 +16,43 @@ const useSavedTripsQuery = (): UseQueryResult<SavedTripsInterface[], Error> => {
     queryKey: ['savedTrips'],
     queryFn: async () => {
       openLoader();
-      const savedTrip = sessionStorage.getItem('savedTrip');
-      const token = await getToken();
-      if (savedTrip !== null) {
-        const savedTripObj: FullTravelFormInterface = JSON.parse(savedTrip);
-        const {
-          destinations,
-          lengthOfTrip,
-          arrivalAirport,
-          departureAirport,
-          timeOfArrival,
-          timeOfDeparture,
-          tripDetails,
-        } = savedTripObj;
-        await postSaveTrip(
-          {
+      try {
+        const savedTrip = sessionStorage.getItem('savedTrip');
+        const token = await getToken();
+        if (savedTrip !== null) {
+          const savedTripObj: FullTravelFormInterface = JSON.parse(savedTrip);
+          const {
             destinations,
             lengthOfTrip,
-            arrivalAirport: arrivalAirport ?? undefined,
-            departureAirport: departureAirport ?? undefined,
-            timeOfArrival: timeOfArrival
-              ? dayjs(timeOfArrival).format(TIME_DISPLAY_FORMAT)
-              : undefined,
-            timeOfDeparture: timeOfDeparture
-              ? dayjs(timeOfDeparture).format(TIME_DISPLAY_FORMAT)
-              : undefined,
+            arrivalAirport,
+            departureAirport,
+            timeOfArrival,
+            timeOfDeparture,
             tripDetails,
-          },
-          token
-        );
-        sessionStorage.removeItem('savedTrip');
+          } = savedTripObj;
+          await postSaveTrip(
+            {
+              destinations,
+              lengthOfTrip,
+              arrivalAirport: arrivalAirport ?? undefined,
+              departureAirport: departureAirport ?? undefined,
+              timeOfArrival: timeOfArrival
+                ? dayjs(timeOfArrival).format(TIME_DISPLAY_FORMAT)
+                : undefined,
+              timeOfDeparture: timeOfDeparture
+                ? dayjs(timeOfDeparture).format(TIME_DISPLAY_FORMAT)
+                : undefined,
+              tripDetails,
+            },
+            token
+          );
+          sessionStorage.removeItem('savedTrip');
+        }
+        const data = await getSavedTrips(token);
+        return data;
+      } finally {
+        closeLoader();
       }
-      const data = await getSavedTrips(token);
-      closeLoader();
-      return data;
     },
   });
 };

@@ -30,8 +30,16 @@ const TableHeaders = [
 ];
 
 const SavedTripsComponent: React.FC = () => {
-  const { data } = useSavedTripsQuery();
+  const { data, error } = useSavedTripsQuery();
   const { onClickDelete } = useSavedTripsComponentLogic();
+
+  if (error) {
+    return (
+      <div>
+        <h1>Error: {error.message}</h1>
+      </div>
+    );
+  }
 
   if (!data) {
     return null;
