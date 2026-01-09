@@ -1,4 +1,6 @@
 name: React Unit Tests
+permissions:
+  contents: read
 
 on:
   push:
